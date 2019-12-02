@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css?family=Leckerli+One|Quicksand&display=swap');
+
+
+.masthead {
+  font-family: 'Leckerli One', cursive;
+  font-size : 4rem;
+  color : white;
+  height: 100vh;
+  min-height: 500px;
+  background-image: url(../src/images/main.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+nav {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  margin: 1rem;
+  font-family: 'Quicksand', sans-serif;
+
+}
+
+.nav-item{
+  margin-right: 3rem;
+}
+
+
+body {
+  color : rgb(46, 46, 46);
+  background-color: rgb(248, 245, 236);
+  font-family: 'Quicksand', sans-serif;
+
+}
+
+
+
+// scroll bar 
+
+
+body::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5; }
+  
+  body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #7aa557; }
+
+
+  // home
+
+  .home {
+    width :80%;
+    margin: auto;
+  }
+
+
+  // button
+
+  .button {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    margin-top: 40px;
+}
+
+.button .bottom {
+    position: absolute;
+    left: 18px;
+    top: 12px;
+    width: 85%;
+    height: 85%;
+    background-color: #7aa5579c;
+    display: block;
+    -webkit-transition: all .15s ease-out;
+    -moz-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+}
+
+.button .top {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 24px 34px 22px 34px;
+    border: 2px solid #e2510d;
+}
+
+.button-dark .top {
+    border: 2px solid rgba(255, 255, 255, 0);
+}
+
+.button .top .label {
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #e2510d;
+    font-size: 12px;
+    line-height: 110%;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    -webkit-transition: all .15s ease-out;
+    -moz-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+}
+
+.button-dark .top .label {
+    color: rgba(255, 255, 255, 0);
+}
+
+.button:hover .bottom {
+    left: 0;
+    top: 0;
+    background-color: #f3f3f300;
+}
+
+.button:hover .top .label {
+    color: #7aa557;
+}
+
+.button-border {
+    position: absolute;
+    background-color: #7aa557;
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
+.button:hover .top .button-border-left,.button:hover .top .button-border-right {
+    height: calc(100% + 2px);
+}
+
+.button:hover .top .button-border-top,.button:hover .top .button-border-bottom {
+    width: calc(100% + 2px);
+}
+
+.button-border-left {
+    left: -2px;
+    bottom: -2px;
+    width: 2px;
+    height: 0;
+}
+
+.button-border-top {
+    left: -2px;
+    top: -2px;
+    width: 0;
+    height: 2px;
+}
+
+.button-border-right {
+    right: -2px;
+    top: -2px;
+    width: 2px;
+    height: 0;
+}
+
+.button-border-bottom {
+    right: -2px;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+}
+
+#intro {
+  width: 200px;
+  margin: 100px auto 0;
+}
