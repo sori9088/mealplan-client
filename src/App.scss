@@ -18,7 +18,7 @@ nav {
   margin-bottom: 1rem;
   margin: 1rem;
   font-family: 'Quicksand', sans-serif;
-
+  color: white;
 }
 
 .nav-item{
@@ -170,4 +170,42 @@ body::-webkit-scrollbar {
 #intro {
   width: 200px;
   margin: 100px auto 0;
+}
+
+
+.social-login {
+    width: 390px;
+    margin: 0 auto;
+    margin-bottom: 14px;
+}
+
+.facebook-btn {
+    background-color: #3C589C;
+}
+.social-btn {
+    font-weight: 100;
+    color: white;
+    width: 190px;
+    font-size: 0.9rem;
+}
+
+.google-btn {
+    background-color: #DF4B3B;
+}
+
+.MuiFormLabel-root.Mui-focused {
+    color : #2c2c2c !important;
+}
+
+.MuiInputBase-input:focus {
+    outline : none !important;
+    outline-style:none !important;
+    border-color:transparent !important;
+} 
+
+.MuiOutlinedInput-input:focus{
+    outline : none !important;
+    outline-style:none !important;
+    border-color:transparent !important;
+
 }

@@ -1,6 +1,26 @@
-import React from 'react'
-import logo from '../images/logo.png'
-export default function Navi() {
+import React from 'react';
+import logo from '../images/logo.png';
+import { Link } from 'react-router-dom';
+
+export default function Navi(props) {
+  const logout =async(e)=> {
+    e.preventDefault()
+    const res = await fetch(process.env.REACT_APP_BURL +'/logout',{
+      headers: {
+        Authorization: `Token ${localStorage.getItem('token')}`
+      }
+    })
+    if (res.ok){
+      props.setUser(null)  // setState the user back to null (original state from app.js)
+      localStorage.clear('token')
+      // navigate user to somewhere after log out
+    } else {
+      alert(" CANNOT LOG OUT")
+    }
+  }
+
+
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark transparent fixed-top">
@@ -29,6 +49,25 @@ export default function Navi() {
 
 
             </ul>
+            {props.user 
+            ?
+            <ul className="nav navbar-nav navbar-right mr-5">
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <img src={props.user && props.user.avatar_url} width="40"
+                    height="40" className="rounded-circle" />
+                </a>
+
+                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a className="dropdown-item">Hello, {props.user && props.user.user_name} !</a>
+                  <a className="dropdown-item" onClick={(e)=>logout(e)}>Logout</a>
+                  <a className="dropdown-item" href="#">Edit Profile</a>
+                </div>
+              </li>
+            </ul>
+          : <> </> 
+          }
           </div>
         </div>
       </nav>
@@ -49,24 +88,27 @@ export default function Navi() {
                     <div className="content-section content-section-margin">
 
                       <div className="content-section-grid clearfix">
+                        {props.user
+                          ?
+                          <> </>
+                          :
+                          <Link to="/login" className="button nav-link">
 
-                        <a href="/login" className="button nav-link">
+                            <div className="bottom"></div>
 
-                          <div className="bottom"></div>
+                            <div className="top">
 
-                          <div className="top">
+                              <div className="label">Sign In</div>
 
-                            <div className="label">Sign In</div>
+                              <div className="button-border button-border-left"></div>
+                              <div className="button-border button-border-top"></div>
+                              <div className="button-border button-border-right"></div>
+                              <div className="button-border button-border-bottom"></div>
 
-                            <div className="button-border button-border-left"></div>
-                            <div className="button-border button-border-top"></div>
-                            <div className="button-border button-border-right"></div>
-                            <div className="button-border button-border-bottom"></div>
+                            </div>
 
-                          </div>
-
-                        </a>
-
+                          </Link>
+                        }
                       </div>
 
                     </div>
