@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,8 +10,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Avatar, Button} from '@material-ui/core';
-import {useHistory} from 'react-router-dom';
+import { Avatar, Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Form } from 'react-bootstrap'
 
 
 function Copyright() {
@@ -19,7 +20,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Meal Plan
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -53,24 +54,24 @@ export default function Signup() {
   const hansol = e => {
     setInput({
       ...input,
-      [e.target.name]:e.target.value
+      [e.target.name]: e.target.value
     })
   }
-  
-  const register = async e =>{
+
+  const register = async e => {
     e.preventDefault()
-    const res = await fetch(process.env.REACT_APP_BURL + "/register",{
-      method:"POST",
+    const res = await fetch(process.env.REACT_APP_BURL + "/register", {
+      method: "POST",
       headers: {
-        'Content-Type' : "application/json"
+        'Content-Type': "application/json"
       },
       body: JSON.stringify(input)
     })
-    if (res.ok){
+    if (res.ok) {
       const data = await res.json()
       if (data.success) {
-          // window.location(process.env.REACT_APP_FURL+"/login") // redirect using window
-          history.push('/login')
+        // window.location(process.env.REACT_APP_FURL+"/login") // redirect using window
+        history.push('/login')
 
       } else {
         alert(data.message)
@@ -92,9 +93,9 @@ export default function Signup() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onChange={e=>hansol(e)}  onSubmit={(e)=>register(e)}>
+        <form className={classes.form} noValidate onChange={e => hansol(e)} onSubmit={(e) => register(e)}>
           <Grid container spacing={2}>
-           
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -130,9 +131,19 @@ export default function Signup() {
               />
             </Grid>
             <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="avatar_url"
+                label="Profile Image URL"
+                name="avatar_url"
+                autoComplete="avatar_url"
+              />
+            </Grid>
+            <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                control={<Checkbox value="allowExtraEmails" name="seller" color="primary" />}
+                label="Do you wanna be a seller ? "
               />
             </Grid>
           </Grid>
@@ -147,7 +158,7 @@ export default function Signup() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

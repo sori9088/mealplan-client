@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from '../images/logo.png';
-import { Link } from 'react-router-dom';
 
 export default function Navi(props) {
   const logout =async(e)=> {
@@ -41,20 +40,20 @@ export default function Navi(props) {
                 <a className="nav-link" href="#">Menu</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Subscribe</a>
-              </li>
-              <li className="nav-item">
                 <a className="nav-link" href="#">Feedback</a>
               </li>
 
-
             </ul>
-            {props.user 
+            
+          </div>
+          {props.user 
             ?
-            <ul className="nav navbar-nav navbar-right mr-5">
+            <>
+            <ul className="nav navbar-nav navbar-right">
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
+
                   <img src={props.user && props.user.avatar_url} width="40"
                     height="40" className="rounded-circle" />
                 </a>
@@ -66,62 +65,15 @@ export default function Navi(props) {
                 </div>
               </li>
             </ul>
+            <i class="fas fa-shopping-cart navbar-right"></i>
+
+             </>
           : <> </> 
           }
-          </div>
         </div>
       </nav>
 
-      <header className="masthead">
-        <div className="container h-100">
-          <div className="row h-100 align-items-center">
-            <div className="col-12 text-center">
-              <span>Healthy and Tasty</span>
-              <p className="lead">A great starter layout for a landing page</p>
-
-              <section id="intro">
-
-                <div id="intro-content" className="center-content">
-
-                  <div className="center-content-inner">
-
-                    <div className="content-section content-section-margin">
-
-                      <div className="content-section-grid clearfix">
-                        {props.user
-                          ?
-                          <> </>
-                          :
-                          <Link to="/login" className="button nav-link">
-
-                            <div className="bottom"></div>
-
-                            <div className="top">
-
-                              <div className="label">Sign In</div>
-
-                              <div className="button-border button-border-left"></div>
-                              <div className="button-border button-border-top"></div>
-                              <div className="button-border button-border-right"></div>
-                              <div className="button-border button-border-bottom"></div>
-
-                            </div>
-
-                          </Link>
-                        }
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </section>
-            </div>
-          </div>
-        </div>
-      </header>
+     
     </>
   )
 }
