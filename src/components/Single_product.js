@@ -4,6 +4,13 @@ import { Container } from 'react-bootstrap'
 export default function Single_product() {
     return (
         <>
+            <div className="shop">
+                <div className="container h-100">
+                    <div className="row h-100 justify-content-start">
+
+                    </div>
+                </div>
+                </div>
             <div className="container dark-grey-text mt-5">
 
                 <div className="row wow fadeIn">

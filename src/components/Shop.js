@@ -3,23 +3,10 @@ import { Container, Button } from 'react-bootstrap'
 
 export default function Shop(props) {
 
-    const [dishes, setDishes] = useState(null)
-
-   
-
-    useEffect(()=>{
-        async function getDishes() {
-            const response = await fetch(`https://api.myjson.com/bins/10yc0c`);
-            const json = await response.json();
-            setDishes(json);
-        } 
-
-        getDishes();
-    });
 
 
 
-    console.log(dishes)
+
     return (
         <>
             <div className="shop">
@@ -40,7 +27,7 @@ export default function Shop(props) {
                         </div>
                         <div className="col-10">
                             <div className="row my-5">
-                                {dishes && dishes.map((dish) =>
+                                {props.dishes && props.dishes.map((dish) =>
                                     <div className="col-md-4 col-sm-6 my-3">
                                         <div className="product-grid">
                                             <div className="product-image">

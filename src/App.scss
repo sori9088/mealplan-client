@@ -267,3 +267,18 @@ h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
 .product-grid .add-to-cart{color:#000;font-size:13px;font-weight:600}
 @media only screen and (max-width:990px){.product-grid{margin-bottom:30px}
 }
+
+
+
+// footer
+
+.footer {
+    background-color: #333;
+    height: 10rem;
+    margin-top: 5rem;
+    padding : 1rem;
+    width:100%;
+    margin-left: 0px !important;
+    color : white;
+    bottom : 0;
+}

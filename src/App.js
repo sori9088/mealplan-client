@@ -10,10 +10,12 @@ import Shop from './components/Shop'
 import Single_product from './components/Single_product';
 import New_dish from './components/New_dish'
 import Dashboard from './components/Dashboard'
+import Footer from './components/Footer'
 
 function App() {
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
-  
+  const [dishes, setDishes] = useState(null)
+
   
   const existingToken = localStorage.getItem("token");
   const accessToken =
@@ -43,14 +45,25 @@ function App() {
       /// more logic here , e.g redirect user to login page because he is no logged in
     }
   }
-    console.log('object', user)
+
+   
+
+    useEffect(()=>{
+        async function getDishes() {
+            const response = await fetch(`https://api.myjson.com/bins/10yc0c`);
+            const json = await response.json();
+            setDishes(json);
+        } 
+
+        getDishes();
+    });
 
   return (
     <>
     <Navi user={user} setUser={setUser} />
         <Switch>
           <Route exact path='/' render={()=> <Main user={user} setUser={setUser} />} />
-          <Route exact path='/shop' render={()=> <Shop user={user} setUser={setUser} />} />
+          <Route exact path='/shop' render={()=> <Shop user={user} setUser={setUser} dishes={dishes} setDishes={setDishes} />} />
           <Route exact path='/detail/:id' render={()=> <Single_product user={user} setUser={setUser} />} />
           <Route exact path='/dashboard/:user_name' render={()=> <Dashboard user={user} setUser={setUser} />} />
           <Route exact path='/new_dish' component={New_dish} />
@@ -61,6 +74,7 @@ function App() {
           </>
         }
         </Switch>
+      <Footer />
     </>
   );
 }
