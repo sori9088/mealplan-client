@@ -1,97 +1,107 @@
-import React, {useState } from 'react'
-import {Form , Button, Col, InputGroup } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Form, Button, Col, InputGroup, Container } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom';
+
+
 
 export default function New_dish() {
-
     const [validated, setValidated] = useState(false);
+    const [input, setInput] = useState({avatar_url:"", seller:"false"})
+    const history = useHistory()
 
-    const handleSubmit = event => {
-        const form = event.currentTarget;
+
+
+    const hansol = e => {
+        setInput({
+        ...input,
+        [e.target.name]: e.target.value
+        })
+    }
+
+
+    const add_food = async e => {
+        e.preventDefault()
+        const form = e.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
         }
 
         setValidated(true);
+
+    const res = await fetch(process.env.REACT_APP_BURL + "/new_dish", {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify(input)
+    })
+    if (res.ok) {
+      const data = await res.json()
+      if (data.success) {
+        // window.location(process.env.REACT_APP_FURL+"/login") // redirect using window
+        history.push('/shop')
+
+      } else {
+        alert(data.message)
+      }
+    }
+
+
     };
 
 
-    return (
-        <div>
 
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    return (
+        <>
+        <div className="shop">
+                <div className="container h-100">
+                    <div className="row h-100 justify-content-start">
+                        <div className="col-12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <Container className="my-5">
+
+            <Form noValidate validated={validated} onChange={e => hansol(e)} onSubmit={(e) => add_food(e)}>
                 <Form.Row>
                     <Form.Group as={Col} md="4" controlId="validationCustom01">
-                        <Form.Label>First name</Form.Label>
+                        <Form.Label>Title</Form.Label>
                         <Form.Control
                             required
                             type="text"
-                            placeholder="First name"
-                            defaultValue="Mark"
+                            placeholder="Food name"
+                            name="name"
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="validationCustom02">
-                        <Form.Label>Last name</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="Last name"
-                            defaultValue="Otto"
-                        />
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                        <Form.Label>Username</Form.Label>
-                        <InputGroup>
-                            <InputGroup.Prepend>
-                                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control
-                                type="text"
-                                placeholder="Username"
-                                aria-describedby="inputGroupPrepend"
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please choose a username.
-              </Form.Control.Feedback>
-                        </InputGroup>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group as={Col} md="6" controlId="validationCustom03">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control type="text" placeholder="City" required />
+                        <Form.Label>Price ($)
+                        </Form.Label>
+                        <Form.Control type="number" placeholder="Price" required name="price" />
                         <Form.Control.Feedback type="invalid">
-                            Please provide a valid city.
+                            Please input a valid price.
             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="3" controlId="validationCustom04">
-                        <Form.Label>State</Form.Label>
-                        <Form.Control type="text" placeholder="State" required />
+                    <Form.Group as={Col} md="6" controlId="validationCustom04">
+                        <Form.Label>Image url</Form.Label>
+                        <Form.Control type="text" placeholder="Image URL" name="img_url" required />
                         <Form.Control.Feedback type="invalid">
-                            Please provide a valid state.
-            </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} md="3" controlId="validationCustom05">
-                        <Form.Label>Zip</Form.Label>
-                        <Form.Control type="text" placeholder="Zip" required />
-                        <Form.Control.Feedback type="invalid">
-                            Please provide a valid zip.
+                            Please provide a valid URL.
             </Form.Control.Feedback>
                     </Form.Group>
                 </Form.Row>
                 <Form.Group>
-                    <Form.Check
-                        required
-                        label="Agree to terms and conditions"
-                        feedback="You must agree before submitting."
-                    />
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control as="textarea" rows="4" name="description" />
                 </Form.Group>
-                <Button type="submit">Submit form</Button>
+                <Button type="submit" variant="success">Submit</Button>
             </Form>
-        </div>
+        </Container>
+        </>
     )
 }
 
