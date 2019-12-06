@@ -4,7 +4,12 @@ import './App.scss';
 import Login from './components/Login'
 import Signup from './components/Signup'
 import { Switch, Route } from 'react-router-dom'
+import Navi from './components/Navi'
 import Main from './components/Main'
+import Shop from './components/Shop'
+import Single_product from './components/Single_product';
+import New_dish from './components/New_dish'
+import Dashboard from './components/Dashboard'
 
 function App() {
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
@@ -41,9 +46,14 @@ function App() {
     console.log('object', user)
 
   return (
+    <>
+    <Navi user={user} setUser={setUser} />
         <Switch>
           <Route exact path='/' render={()=> <Main user={user} setUser={setUser} />} />
-        
+          <Route exact path='/shop' render={()=> <Shop user={user} setUser={setUser} />} />
+          <Route exact path='/detail/:id' render={()=> <Single_product user={user} setUser={setUser} />} />
+          <Route exact path='/dashboard/:user_name' render={()=> <Dashboard user={user} setUser={setUser} />} />
+          <Route exact path='/new_dish' component={New_dish} />
         {!user && 
            <>
           <Route exact path="/login" render={()=> <Login user={user} setUser={setUser} /> } />
@@ -51,7 +61,7 @@ function App() {
           </>
         }
         </Switch>
-    
+    </>
   );
 }
 

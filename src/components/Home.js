@@ -1,64 +1,61 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import Head from './Head'
+import { Container, Card, Button, CardDeck } from 'react-bootstrap';
 
 
 export default function Home(props) {
     return (
         <>
-            <header className="masthead">
-                <div className="container h-100">
-                    <div className="row h-100 align-items-center">
-                        <div className="col-12 text-center">
-                            <span>Healthy and Tasty</span>
-                            <p className="lead">We provide simple, tasty and refreshing health food based on well-being trends.</p>
-
-                            <section id="intro">
-
-                                <div id="intro-content" className="center-content">
-
-                                    <div className="center-content-inner">
-
-                                        <div className="content-section content-section-margin">
-
-                                            <div className="content-section-grid clearfix">
-                                                {props.user
-                                                    ?
-                                                    <> </>
-                                                    :
-                                                    <Link to="/login" className="button nav-link">
-
-                                                        <div className="bottom"></div>
-
-                                                        <div className="top">
-
-                                                            <div className="label">Sign In</div>
-
-                                                            <div className="button-border button-border-left"></div>
-                                                            <div className="button-border button-border-top"></div>
-                                                            <div className="button-border button-border-right"></div>
-                                                            <div className="button-border button-border-bottom"></div>
-
-                                                        </div>
-
-                                                    </Link>
-                                                }
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </section>
+            <Head user={props.user} />
+            <Container>
+                <div className='home'>
+                    <div className='text-center my-5 display-4'>Best</div>
+                    <div className='row'>
+                    <CardDeck>
+                    <div className="col-sm">
+                        <Card>
+                            <Card.Img variant="top" src="holder.js/100px180" />
+                            <Card.Body>
+                                <Card.Title>Card Title</Card.Title>
+                                <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                </Card.Text>
+                                <Button variant="success">Go somewhere</Button>
+                            </Card.Body>
+                        </Card>
                         </div>
+                        <div className="col-sm">
+                        <Card>
+                            <Card.Img variant="top" src="holder.js/100px180" />
+                            <Card.Body>
+                                <Card.Title>Card Title</Card.Title>
+                                <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                </Card.Text>
+                                <Button variant="success">Go somewhere</Button>
+                            </Card.Body>
+                        </Card>
+                        </div>
+                        <div className="col-sm">
+                        <Card>
+                            <Card.Img variant="top" src="holder.js/100px180" />
+                            <Card.Body>
+                                <Card.Title>Card Title</Card.Title>
+                                <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                </Card.Text>
+                                <Button variant="success">Go somewhere</Button>
+                            </Card.Body>
+                        </Card>
+                        </div>
+
+                        </CardDeck>
                     </div>
                 </div>
-            </header>
-            
-            <div className='home'>
-                <div className='text-center my-5 display-4'>About</div>
-            </div>
+            </Container>
         </>
     )
 }

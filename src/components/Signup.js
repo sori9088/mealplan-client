@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Signup() {
-  const [input, setInput] = useState({})
+  const [input, setInput] = useState({avatar_url:"", seller:"false"})
   const history = useHistory()
   const hansol = e => {
     setInput({
@@ -141,10 +141,13 @@ export default function Signup() {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" name="seller" color="primary" />}
-                label="Do you wanna be a seller ? "
-              />
+            <Form.Group controlId="exampleForm.ControlSelect1">
+    <label>Example select</label>
+    <Form.Control as="select" name="seller">
+      <option value={false} >customer</option>
+      <option value={true}>seller</option>
+    </Form.Control>
+  </Form.Group>
             </Grid>
           </Grid>
           <Button

@@ -30,17 +30,17 @@ export default function Navi(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item active">
-                <a className="nav-link" href="#">Home</a>
+              <li className="nav-item">
+                <a className="nav-link" activeClassName="active" href="/">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">About</a>
+                <a className="nav-link" href="/shop">Shop</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Menu</a>
+                <a className="nav-link" activeClassName="active" href="#">Menu</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Feedback</a>
+                <a className="nav-link" activeClassName="active" href="#" >Contact</a>
               </li>
 
             </ul>
@@ -62,13 +62,20 @@ export default function Navi(props) {
                 <a className="dropdown-item">Hello, {props.user && props.user.user_name} !</a>
                   <a className="dropdown-item" onClick={(e)=>logout(e)}>Logout</a>
                   <a className="dropdown-item" href="#">Edit Profile</a>
+                  <a className="dropdown-item" href={"/dashboard/"+props.user.user_name} >Dashboard</a>
                 </div>
               </li>
             </ul>
             <i class="fas fa-shopping-cart navbar-right"></i>
 
              </>
-          : <> </> 
+          : <> 
+          <ul className="nav navbar-nav navbar-right">
+          <li className="nav-item active">
+                <a className="nav-link" href="/login">Login</a>
+            </li>
+        </ul>
+        </> 
           }
         </div>
       </nav>

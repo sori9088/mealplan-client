@@ -134,7 +134,7 @@ export default function Login(props) {
             Sign In
           </Button>
           <div class="social-login">
-                <a  href="https://127.0.0.1:5000/login/facebook" className="btn facebook-btn social-btn" ><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </a>
+                <a  href="https://mealplann.herokuapp.com/login/facebook" className="btn facebook-btn social-btn" ><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </a>
                 <button className="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
         </div>
           <Grid container>
