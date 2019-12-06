@@ -47,13 +47,12 @@ function App() {
   }
 
    
-
+  async function getDishes() {
+    const response = await fetch(`https://api.myjson.com/bins/10yc0c`);
+    const json = await response.json();
+    setDishes(json);
+} 
     useEffect(()=>{
-        async function getDishes() {
-            const response = await fetch(`https://api.myjson.com/bins/10yc0c`);
-            const json = await response.json();
-            setDishes(json);
-        } 
 
         getDishes();
     });
