@@ -53,9 +53,8 @@ function App() {
     setDishes(json);
 } 
     useEffect(()=>{
-
         getDishes();
-    });
+    },[]);
 
   return (
     <>
