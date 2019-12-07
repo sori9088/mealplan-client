@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 
 
 
-export default function New_dish() {
+export default function New_dish(props) {
     const [validated, setValidated] = useState(false);
-    const [input, setInput] = useState({avatar_url:"", seller:"false"})
+    const [input, setInput] = useState({})
     const history = useHistory()
 
 
@@ -32,7 +32,8 @@ export default function New_dish() {
     const res = await fetch(process.env.REACT_APP_BURL + "/new_dish", {
       method: "POST",
       headers: {
-        'Content-Type': "application/json"
+        'Content-Type': "application/json",
+        Authorization: `Token ${props.token}`
       },
       body: JSON.stringify(input)
     })

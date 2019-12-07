@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 import Login from './components/Login'
@@ -15,28 +15,30 @@ import Footer from './components/Footer'
 function App() {
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
   const [dishes, setDishes] = useState(null)
+  const [token, setToken] = useState('')
 
-  
+
   const existingToken = localStorage.getItem("token");
   const accessToken =
     window.location.search.split("=")[0] === "?api_key"
       ? window.location.search.split("=")[1]
       : null;
 
-  useEffect(()=>{
+  useEffect(() => {
     getUser()
   }, [])
 
-  const getUser = async() =>{
+  const getUser = async () => {
 
     const token = existingToken || accessToken
+    setToken(token)
     const res = await fetch(process.env.REACT_APP_BURL + "/getuser", {
-      headers:{
+      headers: {
         Authorization: `Token ${token}`
       }
     })
 
-    if (res.ok){ // user is logged in
+    if (res.ok) { // user is logged in
       const data = await res.json()  // carefull you might be stuck here bcos of "await"
       setUser(data.user)
       localStorage.setItem('token', token)
@@ -46,32 +48,44 @@ function App() {
     }
   }
 
-   
-  async function getDishes() {
-    const response = await fetch(`https://api.myjson.com/bins/10yc0c`);
-    const json = await response.json();
-    setDishes(json);
-} 
-    useEffect(()=>{
-        getDishes();
-    },[]);
 
+  async function getDishes() {
+    const response = await fetch(process.env.REACT_APP_BURL + "/get_products", {
+      headers: {
+        'Content-Type': "application/json"
+      }
+    });
+
+    if (response.ok) {
+      const json = await response.json();
+      setDishes(json);
+    }
+
+  }
+  useEffect(() => {
+    getDishes();
+  }, []);
+
+
+  
+
+  console.log(dishes)
   return (
     <>
-    <Navi user={user} setUser={setUser} />
-        <Switch>
-          <Route exact path='/' render={()=> <Main user={user} setUser={setUser} />} />
-          <Route exact path='/shop' render={()=> <Shop user={user} setUser={setUser} dishes={dishes} setDishes={setDishes} />} />
-          <Route exact path='/detail/:id' render={()=> <Single_product user={user} setUser={setUser} />} />
-          <Route exact path='/dashboard/:user_name' render={()=> <Dashboard user={user} setUser={setUser} />} />
-          <Route exact path='/new_dish' component={New_dish} />
-        {!user && 
-           <>
-          <Route exact path="/login" render={()=> <Login user={user} setUser={setUser} /> } />
-          <Route exact path="/signup" component={Signup} />
+      <Navi user={user} setUser={setUser} />
+      <Switch>
+        <Route exact path='/' render={() => <Main user={user} setUser={setUser} />} />
+        <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} />} />
+        <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} />} />
+        <Route exact path='/dashboard/:user_name' render={() => <Dashboard user={user} setUser={setUser} />} />
+        <Route exact path='/new_dish' render={() => <New_dish user={user} token={token} />} />
+        {!user &&
+          <>
+            <Route exact path="/login" render={() => <Login user={user} setUser={setUser} />} />
+            <Route exact path="/signup" component={Signup} />
           </>
         }
-        </Switch>
+      </Switch>
       <Footer />
     </>
   );

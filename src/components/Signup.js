@@ -102,7 +102,7 @@ export default function Signup() {
                 required
                 fullWidth
                 id="name"
-                label="Name"
+                label="UserName / SellerName"
                 name="name"
                 autoComplete="name"
               />

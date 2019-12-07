@@ -4,8 +4,7 @@ import { Container, Button } from 'react-bootstrap'
 export default function Shop(props) {
 
 
-
-
+console.log(props.dishes)
 
     return (
         <>
@@ -28,13 +27,13 @@ export default function Shop(props) {
                     </div>
                     <div className="col-10">
                         <div className="row my-5">
-                            {props.dishes && props.dishes.map((dish) =>
+                            {props.dishes && props.dishes.dishes.map((dish) =>
                                 <div className="col-md-4 col-sm-6 my-3">
                                     <div className="product-grid">
                                         <div className="product-image">
                                             <a href="#">
-                                                <img className="pic-1" src={dish.image} />
-                                                <img className="pic-2" src={dish.image} />
+                                                <img className="pic-1" src={dish.img_url} />
+                                                <img className="pic-2" src={dish.img_url} />
                                             </a>
                                             <ul className="social">
                                                 <li><a href={'/detail/' + dish.id} data-tip="View detail"><i className="fa fa-search"></i></a></li>
@@ -46,7 +45,7 @@ export default function Shop(props) {
 
                                         <div className="product-content">
                                             <h3 className="title"><a href="#">{dish.name}</a></h3>
-                                            <div className="price">{dish.price}
+                                            <div className="price">$ {dish.price}
                                             </div>
                                             <ul className="rating">
                                                 <li className="fa fa-star"></li>
