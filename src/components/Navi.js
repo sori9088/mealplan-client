@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../images/logo.png';
+import {useHistory} from 'react-router-dom';
+
 
 export default function Navi(props) {
+
+  const history = useHistory()
+
+  const [scrolling, setScrolling] = useState(false);
+
+  const handleScroll = () => {
+    if(window.scrollY === 0 || window.scrollY === 50) {
+        setScrolling(false);
+    } else if (window.scrollY > 450) {
+        setScrolling(true);
+    }
+}
+
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+  }, [])
+  
+  const Update = (event) => {
+    window.location.reload(false);
+  }
+
+
   const logout = async (e) => {
     e.preventDefault()
     const res = await fetch(process.env.REACT_APP_BURL + '/logout', {
@@ -12,7 +37,8 @@ export default function Navi(props) {
     if (res.ok) {
       props.setUser(null)  // setState the user back to null (original state from app.js)
       localStorage.clear('token')
-      // navigate user to somewhere after log out
+      history.push('/login')
+
     } else {
       alert(" CANNOT LOG OUT")
     }
@@ -20,10 +46,12 @@ export default function Navi(props) {
 
 
 
+
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark transparent fixed-top">
-        <div className="container">
+      <nav className={scrolling ? "navbar-light navbar navbar-expand-lg fixed-top transition": "navbar-dark navbar navbar-expand-lg fixed-top transition"}>
+        <div className="container transition" style={{color : scrolling ? 'black':'white'}}>
           <a className="navbar-brand"><img src={logo} width="170" alt="" /></a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -64,7 +92,7 @@ export default function Navi(props) {
                         </div>
                       </li>
                       <div className="align-items-center d-flex">
-                      <i class="fas fa-shopping-cart"></i>
+                      <i class="fas fa-shopping-cart"></i> <span className="ml-2">{props.cart && props.cart.count}</span>
                       </div>
                     </ul>
                     

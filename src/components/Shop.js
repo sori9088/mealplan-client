@@ -1,10 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Button } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom';
+
 
 export default function Shop(props) {
 
+    const history = useHistory()
 
-console.log(props.dishes)
+
+    const add_cart = async (id) => {
+
+
+    const res = await fetch(process.env.REACT_APP_BURL + "/add_cart/"+id, {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json",
+        Authorization: `Token ${props.token}`
+      }
+    })
+    if (res.ok) {
+      const data = await res.json()
+      if (data.success) {
+        history.push('/shop')
+
+      } else {
+        alert(data.message)
+      }
+    }
+
+    };
 
     return (
         <>
@@ -37,7 +61,7 @@ console.log(props.dishes)
                                             </a>
                                             <ul className="social">
                                                 <li><a href={'/detail/' + dish.id} data-tip="View detail"><i className="fa fa-search"></i></a></li>
-                                                <li><a href="" data-tip="Add to Cart"><i className="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href='#' onClick={()=> add_cart(dish.id)} data-tip="Add to Cart"><i className="fa fa-shopping-cart"></i></a></li>
                                             </ul>
                                             <span className="product-new-label">{dish.seller}</span>
                                             <span className="product-discount-label">20%</span>

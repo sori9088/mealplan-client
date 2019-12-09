@@ -24,6 +24,19 @@
     background-repeat: no-repeat;
   }
 
+.dashboard {
+    font-size : 4rem;
+    color : white;
+    height: 50vh;
+    min-height: 200px;
+    background-image: url(../src/images/main.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+
+
 .shop-text {
     font-family: 'Leckerli One', cursive;
 
@@ -48,7 +61,13 @@ nav {
   margin-right: 3rem;
 }
 
-
+.transition {    
+    -webkit-transition: all .5s ease-in-out;
+      -moz-transition: all .5s ease-in-out;
+      -o-transition: all .5s ease-in-out;
+      transition: all .5s ease-in-out;
+  }
+  
 body {
   color : rgb(46, 46, 46);
   background-color: rgb(248, 245, 236);
@@ -56,6 +75,20 @@ body {
 
 }
 
+
+// sign form
+
+.makeStyles-avatar-2 {
+    margin: 8px;
+    background-color: #7aa557 !important;
+}
+
+
+.single {
+    width : 80%;
+    margin: auto;
+    background-color : white;
+}
 
 
 // scroll bar 

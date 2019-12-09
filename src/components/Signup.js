@@ -8,11 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Avatar, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap'
+import { makeStyles, createMuiTheme,  ThemeProvider} from '@material-ui/core/styles';
+import { green, red, pink, orange } from '@material-ui/core/colors';
 
 
 function Copyright() {
@@ -47,6 +48,13 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
+const theme = createMuiTheme({
+  palette: {
+    primary: orange,
+  },
+});
+
 
 export default function Signup() {
   const [input, setInput] = useState({avatar_url:"", seller:"false"})
@@ -84,6 +92,7 @@ export default function Signup() {
   const classes = useStyles();
 
   return (
+    <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -172,5 +181,6 @@ export default function Signup() {
         <Copyright />
       </Box>
     </Container>
+    </ThemeProvider>
   );
 }
