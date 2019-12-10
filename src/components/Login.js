@@ -68,7 +68,7 @@ export default function Login(props) {
       [e.target.name]:e.target.value
     })
   }
-  
+
   const login = async e =>{
       console.log(input)
     e.preventDefault()
@@ -88,7 +88,14 @@ export default function Login(props) {
           history.push('/')
 
       } else {
-        alert(data.message)
+        if (data.code === 1){
+          alert(data.message)
+          history.push('/signup')
+        }
+
+
+        else if (data.code === 2)
+          alert(data.message)
       }
     }
   }
@@ -143,7 +150,7 @@ export default function Login(props) {
             Sign In
           </Button>
           <div class="social-login">
-                <a  href="https://mealplann.herokuapp.com/login/facebook" className="btn facebook-btn social-btn" ><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </a>
+                <a  href={process.env.REACT_APP_BURL +"/login/facebook"} className="btn facebook-btn social-btn" ><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </a>
                 <button className="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
         </div>
           <Grid container>

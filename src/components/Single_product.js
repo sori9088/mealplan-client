@@ -3,10 +3,9 @@ import { Form, Button } from 'react-bootstrap'
 
 export default function Single_product(props) {
 
-    const [dish, setDish] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
+    const [dish, setDish] = useState(null)
     const product_id = props.match.params.id
-    const [input, setInput] = useState(null)
-
+    const [quantity, setQuantity] = useState(1)
 
     useEffect(() => {
         getDish(product_id);
@@ -25,15 +24,13 @@ export default function Single_product(props) {
             const json = await response.json();
             setDish(json);
         }
-
     }
 
     const hansol = e => {
-        setInput({
-          ...input,
-          [e.target.name]: e.target.value
-        })
+        setQuantity(e.target.value)
       }
+
+
 
 
     return (
@@ -83,8 +80,11 @@ export default function Single_product(props) {
                                 <p>{dish && dish.description}</p>
                                 <div className="col-8">
                                     <div className="row">
-                                    <Form className="d-flex justify-content-left" onChange={e => hansol(e)}>
-                                        <Form.Control type="number" name='quantity' defaultValue='1' />
+                                    <Form className="d-flex justify-content-left" onChange={e => hansol(e)} onSubmit={(e)=> {
+                                      e.preventDefault();
+                                       props.add_cart(dish.id,quantity)
+                                    }} >
+                                        <Form.Control type="number" name='quantity' defaultValue={quantity} />
                                         <Button variant="success" type="submit" size="sm">
                                         <i className="fas fa-shopping-cart"></i></Button>
 

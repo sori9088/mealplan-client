@@ -9,7 +9,7 @@ export default function Footer() {
             <footer>
                 <Row fluid className="footer">
                     <Col xs={6} md={6}>
-                    <img src={logo} width="130" alt="" />
+                    <img src={logo} width="130" alt="" className="my-3" />
                         <h4>About</h4>
                     </Col>
                     <Col xs={4} md={3}>

@@ -33,7 +33,7 @@ export default function New_dish(props) {
       method: "POST",
       headers: {
         'Content-Type': "application/json",
-        Authorization: `Token ${props.token}`
+        Authorization: `Token ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(input)
     })
@@ -105,4 +105,3 @@ export default function New_dish(props) {
         </>
     )
 }
-

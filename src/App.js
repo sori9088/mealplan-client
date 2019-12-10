@@ -18,7 +18,6 @@ function App() {
 
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
   const [dishes, setDishes] = useState(null)
-  const [token, setToken] = useState('')
   const [cart, setCart] = useState(null)
 
   const [noofitem, setNoofitem] = useState(null)
@@ -33,7 +32,7 @@ function App() {
 
   useEffect(() => {
     getUser();
-    getDishes(); 
+    getDishes();
   }, [])
 
 
@@ -45,7 +44,6 @@ function App() {
   const getUser = async () => {
 
     const token = existingToken || accessToken
-    setToken(token)
     const res = await fetch(process.env.REACT_APP_BURL + "/getuser", {
       headers: {
         Authorization: `Token ${token}`
@@ -59,8 +57,6 @@ function App() {
 
     } else {
       localStorage.clear('token')
-      alert(res.message)
-      history.push('/signup')
     }
 
   }
@@ -70,7 +66,7 @@ function App() {
     const response1 = await fetch(process.env.REACT_APP_BURL + "/get_cart/"+id, {
       headers: {
         'Content-Type': "application/json",
-        Authorization: `token ${token}`
+        Authorization: `token ${localStorage.getItem('token')}`
       }
     });
 
@@ -93,20 +89,40 @@ function App() {
       const json = await response.json();
       setDishes(json);
     }
-
   }
 
 
+  const add_cart = async (id,quantity) => {
+    console.log('haha', id,quantity)
+      const res = await fetch(process.env.REACT_APP_BURL + "/add_cart", {
+        method: "POST",
+        headers: {
+          'Content-Type': "application/json",
+          Authorization: `Token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({product_id : id,
+                              quantity : quantity })
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.success) {
+          alert('Successfully add to cart :)))')
+          // getCart();
+        } else {
+          alert(data.message)
+        }
+      }
+      };
 
   return (
     <>
       <Navi user={user} setUser={setUser} cart={cart} />
       <Switch>
         <Route exact path='/' render={() => <Main user={user} setUser={setUser} />} />
-        <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} token={token} />} />
-        <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} />} />
+        <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} add_cart={add_cart} />} />
+        <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />}  />
         <Route exact path='/dashboard/:user_name' render={() => <Dashboard user={user} setUser={setUser} />} />
-        <Route exact path='/new_dish' render={() => <New_dish user={user} token={token} />} />
+        <Route exact path='/new_dish' render={() => <New_dish user={user} />} />
         {!user &&
           <>
             <Route exact path="/login" render={() => <Login user={user} setUser={setUser} />} />
