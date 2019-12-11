@@ -14,7 +14,7 @@ export default function Single_product(props) {
 
 
     async function getDish(id) {
-        const response = await fetch(process.env.REACT_APP_BURL + "/detail/" + id, {
+        const response = await fetch(process.env.REACT_APP_BURL + "/product/detail/" + id, {
             headers: {
                 'Content-Type': "application/json"
             }

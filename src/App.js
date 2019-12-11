@@ -11,6 +11,8 @@ import Single_product from './components/Single_product';
 import New_dish from './components/New_dish'
 import Dashboard from './components/Dashboard'
 import Footer from './components/Footer'
+import Checkout from './components/Checkout'
+import Cart from './components/Cart'
 import {useHistory} from 'react-router-dom';
 
 function App() {
@@ -79,7 +81,7 @@ function App() {
 
 
   async function getDishes() {
-    const response = await fetch(process.env.REACT_APP_BURL + "/get_products", {
+    const response = await fetch(process.env.REACT_APP_BURL + "/product/get", {
       headers: {
         'Content-Type': "application/json"
       }
@@ -93,7 +95,6 @@ function App() {
 
 
   const add_cart = async (id,quantity) => {
-    console.log('haha', id,quantity)
       const res = await fetch(process.env.REACT_APP_BURL + "/add_cart", {
         method: "POST",
         headers: {
@@ -114,6 +115,8 @@ function App() {
       }
       };
 
+
+
   return (
     <>
       <Navi user={user} setUser={setUser} cart={cart} />
@@ -121,8 +124,10 @@ function App() {
         <Route exact path='/' render={() => <Main user={user} setUser={setUser} />} />
         <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} add_cart={add_cart} />} />
         <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />}  />
-        <Route exact path='/dashboard/:user_name' render={() => <Dashboard user={user} setUser={setUser} />} />
+        <Route exact path='/user/:id/dashboard/' render={() => <Dashboard user={user} setUser={setUser} />} />
         <Route exact path='/new_dish' render={() => <New_dish user={user} />} />
+        <Route exact path='/user/:id/checkout' render={() => <Checkout user={user} cart={cart} /> } />
+        <Route exact path='/user/:id/cart' render={()=> <Cart user={user} cart={cart} />} />
         {!user &&
           <>
             <Route exact path="/login" render={() => <Login user={user} setUser={setUser} />} />

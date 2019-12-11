@@ -21,7 +21,7 @@ export default function Navi(props) {
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
   }, [])
-  
+
   const Update = (event) => {
     window.location.reload(false);
   }
@@ -50,8 +50,8 @@ export default function Navi(props) {
 
   return (
     <>
-      <nav className={scrolling ? "navbar-light navbar navbar-expand-lg fixed-top transition": "navbar-dark navbar navbar-expand-lg fixed-top transition"}>
-        <div className="container transition" style={{color : scrolling ? 'black':'white'}}>
+      <nav className={scrolling ? "navbar-light navbar navbar-expand-lg fixed-top transition bg": "navbar-dark navbar navbar-expand-lg fixed-top transition"}>
+        <div className="container transition my-3" style={{color : scrolling ? 'black':'white'}}>
           <a className="navbar-brand"><img src={logo} width="170" alt="" /></a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -88,14 +88,14 @@ export default function Navi(props) {
                           <a className="dropdown-item">Hello, {props.user && props.user.user_name} !</a>
                           <a className="dropdown-item" onClick={(e) => logout(e)}>Logout</a>
                           <a className="dropdown-item" href="#">Edit Profile</a>
-                          <a className="dropdown-item" href={"/dashboard/" + props.user.user_name} >Dashboard</a>
+                          <a className="dropdown-item" href={"/user/"+props.user.user_id+"/dashboard"} >Dashboard</a>
                         </div>
                       </li>
                       <div className="align-items-center d-flex">
-                      <i class="fas fa-shopping-cart"></i> <span className="ml-2">{props.cart && props.cart.count}</span>
+                      <a href={"/user/"+(props.user && props.user.user_id)+"/cart"} style={{color : scrolling ? 'black':'white'}}><i class="fas fa-shopping-cart"></i></a><span className="ml-2">{props.cart && props.cart.count}</span>
                       </div>
                     </ul>
-                    
+
                   </li>
                 </>
 

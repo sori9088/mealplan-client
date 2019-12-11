@@ -29,7 +29,7 @@ export default function New_dish(props) {
 
         setValidated(true);
 
-    const res = await fetch(process.env.REACT_APP_BURL + "/new_dish", {
+    const res = await fetch(process.env.REACT_APP_BURL + "/product/new", {
       method: "POST",
       headers: {
         'Content-Type': "application/json",
