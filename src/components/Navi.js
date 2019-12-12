@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../images/logo.png';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 export default function Navi(props) {
@@ -10,12 +10,12 @@ export default function Navi(props) {
   const [scrolling, setScrolling] = useState(false);
 
   const handleScroll = () => {
-    if(window.scrollY === 0 || window.scrollY === 50) {
-        setScrolling(false);
+    if (window.scrollY === 0 || window.scrollY === 50) {
+      setScrolling(false);
     } else if (window.scrollY > 450) {
-        setScrolling(true);
+      setScrolling(true);
     }
-}
+  }
 
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function Navi(props) {
     if (res.ok) {
       props.setUser(null)  // setState the user back to null (original state from app.js)
       localStorage.clear('token')
-      history.push('/login')
+      history.push('/')
 
     } else {
       alert(" CANNOT LOG OUT")
@@ -50,8 +50,8 @@ export default function Navi(props) {
 
   return (
     <>
-      <nav className={scrolling ? "navbar-light navbar navbar-expand-lg fixed-top transition bg": "navbar-dark navbar navbar-expand-lg fixed-top transition"}>
-        <div className="container transition my-3" style={{color : scrolling ? 'black':'white'}}>
+      <nav className={scrolling ? "navbar-light navbar navbar-expand-lg fixed-top transition bg" : "navbar-dark navbar navbar-expand-lg fixed-top transition"}>
+        <div className="container transition my-3" style={{ color: scrolling ? 'black' : 'white' }}>
           <a className="navbar-brand"><img src={logo} width="170" alt="" /></a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -88,11 +88,11 @@ export default function Navi(props) {
                           <a className="dropdown-item">Hello, {props.user && props.user.user_name} !</a>
                           <a className="dropdown-item" onClick={(e) => logout(e)}>Logout</a>
                           <a className="dropdown-item" href="#">Edit Profile</a>
-                          <a className="dropdown-item" href={"/user/"+props.user.user_id+"/dashboard"} >Dashboard</a>
+                          <a className="dropdown-item" href={"/user/" + props.user.user_id + "/dashboard"} >Dashboard</a>
                         </div>
                       </li>
                       <div className="align-items-center d-flex">
-                      <a href={"/user/"+(props.user && props.user.user_id)+"/cart"} style={{color : scrolling ? 'black':'white'}}><i class="fas fa-shopping-cart"></i></a><span className="ml-2">{props.cart && props.cart.count}</span>
+                        <a href={"/user/" + (props.user && props.user.user_id) + "/cart"} style={{ color: scrolling ? 'black' : 'white' }}><i class="fas fa-shopping-cart"></i></a><span className="ml-2">{props.cart && props.cart.whole}</span>
                       </div>
                     </ul>
 
@@ -111,10 +111,10 @@ export default function Navi(props) {
               }
             </ul>
           </div>
-          </div>
+        </div>
       </nav>
 
     </>
 
-      )
-    }
+  )
+}

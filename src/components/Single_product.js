@@ -28,7 +28,7 @@ export default function Single_product(props) {
 
     const hansol = e => {
         setQuantity(e.target.value)
-      }
+    }
 
 
 
@@ -43,7 +43,7 @@ export default function Single_product(props) {
                 </div>
             </div>
 
-            <div className="container dark-grey-text mt-5">
+            <div className="container dark-grey-text my-5">
                 <div className='single shadow'>
                     <div className="row wow fadeIn">
 
@@ -80,15 +80,15 @@ export default function Single_product(props) {
                                 <p>{dish && dish.description}</p>
                                 <div className="col-8">
                                     <div className="row">
-                                    <Form className="d-flex justify-content-left" onChange={e => hansol(e)} onSubmit={(e)=> {
-                                      e.preventDefault();
-                                       props.add_cart(dish.id,quantity)
-                                    }} >
-                                        <Form.Control type="number" name='quantity' defaultValue={quantity} />
-                                        <Button variant="success" type="submit" size="sm">
-                                        <i className="fas fa-shopping-cart"></i></Button>
+                                        <Form className="d-flex justify-content-left" onChange={e => hansol(e)} onSubmit={(e) => {
+                                            e.preventDefault();
+                                            props.add_cart(product_id, quantity)
+                                        }} >
+                                            <Form.Control type="number" name='quantity' defaultValue={quantity} />
+                                            <Button variant="success" type="submit" size="sm">
+                                                <i className="fas fa-shopping-cart"></i></Button>
 
-                                    </Form>
+                                        </Form>
                                     </div>
                                 </div>
 

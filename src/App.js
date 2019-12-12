@@ -11,17 +11,21 @@ import Single_product from './components/Single_product';
 import New_dish from './components/New_dish'
 import Dashboard from './components/Dashboard'
 import Footer from './components/Footer'
+import StripeHookProvider from './components/StripeHookProvider'
+import CheckoutForm from './components/CheckoutForm'
 import Checkout from './components/Checkout'
 import Cart from './components/Cart'
-import {useHistory} from 'react-router-dom';
+import { StripeProvider, Elements } from 'react-stripe-elements';
+import { useStripe } from './components/StripeHookProvider'
+import { useHistory } from 'react-router-dom';
 
 function App() {
+  const stripe = useStripe()
   const history = useHistory()
 
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
   const [dishes, setDishes] = useState(null)
   const [cart, setCart] = useState(null)
-
   const [noofitem, setNoofitem] = useState(null)
 
   const id = user && user.user_id
@@ -30,7 +34,6 @@ function App() {
     window.location.search.split("=")[0] === "?api_key"
       ? window.location.search.split("=")[1]
       : null;
-
 
   useEffect(() => {
     getUser();
@@ -65,7 +68,7 @@ function App() {
 
 
   const getCart = async (id) => {
-    const response1 = await fetch(process.env.REACT_APP_BURL + "/get_cart/"+id, {
+    const response1 = await fetch(process.env.REACT_APP_BURL + "/cart/get/" + id, {
       headers: {
         'Content-Type': "application/json",
         Authorization: `token ${localStorage.getItem('token')}`
@@ -90,30 +93,33 @@ function App() {
     if (response.ok) {
       const json = await response.json();
       setDishes(json);
+
     }
   }
 
 
-  const add_cart = async (id,quantity) => {
-      const res = await fetch(process.env.REACT_APP_BURL + "/add_cart", {
-        method: "POST",
-        headers: {
-          'Content-Type': "application/json",
-          Authorization: `Token ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({product_id : id,
-                              quantity : quantity })
+  const add_cart = async (id, quantity) => {
+    const res = await fetch(process.env.REACT_APP_BURL + "/cart/add", {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json",
+        Authorization: `Token ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        product_id: id,
+        quantity: quantity
       })
-      if (res.ok) {
-        const data = await res.json()
-        if (data.success) {
-          alert('Successfully add to cart :)))')
-          // getCart();
-        } else {
-          alert(data.message)
-        }
+    })
+    if (res.ok) {
+      const data = await res.json()
+      if (data.success) {
+        alert('Successfully add to cart :)))')
+        setCart(data.data);
+      } else {
+        alert(data.message)
       }
-      };
+    }
+  };
 
 
 
@@ -121,13 +127,23 @@ function App() {
     <>
       <Navi user={user} setUser={setUser} cart={cart} />
       <Switch>
+
         <Route exact path='/' render={() => <Main user={user} setUser={setUser} />} />
         <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} add_cart={add_cart} />} />
-        <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />}  />
+        <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />} />
         <Route exact path='/user/:id/dashboard/' render={() => <Dashboard user={user} setUser={setUser} />} />
-        <Route exact path='/new_dish' render={() => <New_dish user={user} />} />
-        <Route exact path='/user/:id/checkout' render={() => <Checkout user={user} cart={cart} /> } />
-        <Route exact path='/user/:id/cart' render={()=> <Cart user={user} cart={cart} />} />
+        <Route exact path='/new_dish' render={() => <New_dish user={user} setDishes={setDishes} />} />
+        <Route exact path='/user/:id/checkout' render={() =>
+          <StripeProvider apiKey="pk_test_Ud5Rz42QmBEXPEkkMmIfwQUq00UK5iUSii" {...{ stripe }}>
+            <Elements>
+              <StripeHookProvider>
+                <Checkout user={user} cart={cart} />
+              </StripeHookProvider>
+            </Elements>
+          </StripeProvider>
+        } />
+        <Route exact path='/user/:id/cart' render={() => <Cart user={user} cart={cart} setCart={setCart} />} />
+
         {!user &&
           <>
             <Route exact path="/login" render={() => <Login user={user} setUser={setUser} />} />

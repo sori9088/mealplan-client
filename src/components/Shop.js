@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Spinner } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
 
 
 export default function Shop(props) {
+    const [rating, setRating] = useState({ min: 0, max: 5 })
 
 
+    const onRatingSliderChange = (value) => {
+        setRating(value)
+    }
 
     return (
         <>
@@ -19,15 +25,27 @@ export default function Shop(props) {
                 </div>
             </div>
             <Container>
-                <div className="row">
-                    <div className="col-2">
-                        {(props.user && props.user.seller == true) ?
-                            <Button variant="success" size="sm" href="/new_dish">Serve your dish</Button>
-                            : <> </>
-                        }
+                <div className="row my-5">
+                    <div className="col-md-3">
+                        <div className="py-3 text-center">
+                            <InputRange
+                                maxValue={5}
+                                minValue={0}
+                                value={rating}
+                                onChange={value => onRatingSliderChange(value)} />
+                            <span className="my-3">Rating</span>
+                        </div>
                     </div>
-                    <div className="col-10">
-                        <div className="row my-5">
+                    <div className="col-md-9">
+                        {!props.dishes ?
+                            <>
+                                <div className="d-flex justify-content-center" style={{ "height": "300px" }}>
+                                    <Spinner animation="border" variant="success" />
+                                </div>
+                            </> :
+                            <>
+                            </>}
+                        <div className="row">
                             {props.dishes && props.dishes.dishes.map((dish) =>
                                 <div className="col-md-4 col-sm-6 my-3">
                                     <div className="product-grid">
@@ -38,9 +56,10 @@ export default function Shop(props) {
                                             </a>
                                             <ul className="social">
                                                 <li><a href={'/detail/' + dish.id} data-tip="View detail"><i className="fa fa-search"></i></a></li>
-                                                <li><a data-tip="Add to Cart"><i onClick={(e)=>{
-                                                  e.preventDefault();
-                                                  props.add_cart(dish.id,1)}} className="fa fa-shopping-cart"></i></a></li>
+                                                <li><a data-tip="Add to Cart"><i onClick={(e) => {
+                                                    e.preventDefault();
+                                                    props.add_cart(dish.id, 1)
+                                                }} className="fa fa-shopping-cart"></i></a></li>
                                             </ul>
                                             <span className="product-new-label">{dish.seller}</span>
                                             <span className="product-discount-label">20%</span>
