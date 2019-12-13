@@ -65,7 +65,7 @@ export default function Cart(props) {
                                       <thead>
                                           <tr>
                                               <th scope="col" className="border-0 bg-light">
-                                                  <div className="p-2 px-3 text-uppercase">Product</div>
+                                                  <div className="p-2 text-uppercase">Product</div>
                                               </th>
                                               <th scope="col" className="border-0 bg-light">
                                                   <div className="py-2 text-uppercase">Price</div>
@@ -91,7 +91,7 @@ export default function Cart(props) {
                                                           <th scope="row" className="border-0">
                                                               <div className="p-2">
                                                                   <img src={item.img_url} alt="" width="70" className="img-fluid rounded shadow-sm" />
-                                                                  <div className="ml-3 d-inline-block align-middle">
+                                                                  <div className="ml-2 d-inline-block align-middle">
                                                                       <h5 className="mb-0"> <a href="#" className="text-dark d-inline-block align-middle">{item.product_name}</a></h5><span className="text-muted font-weight-normal font-italic d-block"></span>
                                                                   </div>
                                                               </div>
@@ -144,7 +144,7 @@ export default function Cart(props) {
                                           <h5 className="font-weight-bold">${props.cart && props.cart.ship}</h5>
                                       </li>
                                   </ul>
-                                  <a href={"/user/"+(props.user.user_id)+"/checkout"} className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+                                  <a href={"/user/checkout"} className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
                               </div>
                           </div>
                       </div>

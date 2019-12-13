@@ -204,8 +204,8 @@ legend {
             .card-profile-image img {
             position: absolute;
             left: 50%;
-            width: 200px;
-            height: 200px;
+            width: 11rem;
+            height: 11rem;
             transition: all .15s ease;
             transform: translate(-50%, -30%);
             }
@@ -663,4 +663,14 @@ ul.social-footer2 li a {display: block;	height:30px;width: 30px;text-align: cent
     background: #7aa557;
 border: 1px solid #7aa557;
 border-radius: 100%;
+}
+
+.input-range__track--active {
+  background: #7aa557;
+}
+
+
+//table
+.table td, .table th {
+  padding: .25rem;
 }

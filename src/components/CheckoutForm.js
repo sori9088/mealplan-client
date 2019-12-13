@@ -40,7 +40,7 @@ class CheckoutForm extends Component {
 
     if (response.ok) {
       alert("Purchase Complete!")
-      // history.push('/cart/'+(props.user.user_id)+'/complete')
+      // history.('/cart/'+(props.user.user_id)+'/complete')
     }
   }
 

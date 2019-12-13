@@ -15,6 +15,7 @@ import StripeHookProvider from './components/StripeHookProvider'
 import CheckoutForm from './components/CheckoutForm'
 import Checkout from './components/Checkout'
 import Cart from './components/Cart'
+import Complete from './components/Complete'
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import { useStripe } from './components/StripeHookProvider'
 import { useHistory } from 'react-router-dom';
@@ -71,7 +72,7 @@ function App() {
     const response1 = await fetch(process.env.REACT_APP_BURL + "/cart/get/" + id, {
       headers: {
         'Content-Type': "application/json",
-        Authorization: `token ${localStorage.getItem('token')}`
+        Authorization: `Token ${localStorage.getItem('token')}`
       }
     });
 
@@ -131,9 +132,9 @@ function App() {
         <Route exact path='/' render={() => <Main user={user} setUser={setUser} />} />
         <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} add_cart={add_cart} />} />
         <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />} />
-        <Route exact path='/user/:id/dashboard/' render={() => <Dashboard user={user} setUser={setUser} />} />
+        <Route exact path='/user/dashboard/' render={() => <Dashboard user={user} cart={cart} />} />
         <Route exact path='/new_dish' render={() => <New_dish user={user} setDishes={setDishes} />} />
-        <Route exact path='/user/:id/checkout' render={() =>
+        <Route exact path='/user/checkout' render={() =>
           <StripeProvider apiKey="pk_test_Ud5Rz42QmBEXPEkkMmIfwQUq00UK5iUSii" {...{ stripe }}>
             <Elements>
               <StripeHookProvider>
@@ -142,8 +143,8 @@ function App() {
             </Elements>
           </StripeProvider>
         } />
-        <Route exact path='/user/:id/cart' render={() => <Cart user={user} cart={cart} setCart={setCart} />} />
-
+        <Route exact path='/user/cart' render={() => <Cart user={user} cart={cart} setCart={setCart} />} />
+        <Route exact path='/user/checkout/complete' render={()=> <Complete user={user} cart={cart} /> } />
         {!user &&
           <>
             <Route exact path="/login" render={() => <Login user={user} setUser={setUser} />} />

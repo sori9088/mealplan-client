@@ -88,11 +88,11 @@ export default function Navi(props) {
                           <a className="dropdown-item">Hello, {props.user && props.user.user_name} !</a>
                           <a className="dropdown-item" onClick={(e) => logout(e)}>Logout</a>
                           <a className="dropdown-item" href="#">Edit Profile</a>
-                          <a className="dropdown-item" href={"/user/" + props.user.user_id + "/dashboard"} >Dashboard</a>
+                          <a className="dropdown-item" href={"/user/dashboard"} >Dashboard</a>
                         </div>
                       </li>
                       <div className="align-items-center d-flex">
-                        <a href={"/user/" + (props.user && props.user.user_id) + "/cart"} style={{ color: scrolling ? 'black' : 'white' }}><i class="fas fa-shopping-cart"></i></a><span className="ml-2">{props.cart && props.cart.whole}</span>
+                        <a href={"/user/cart"} style={{ color: scrolling ? 'black' : 'white' }}><i class="fas fa-shopping-cart"></i></a><span className="ml-2">{props.cart && props.cart.whole}</span>
                       </div>
                     </ul>
 
