@@ -653,3 +653,14 @@ ul.social-footer2 {	margin: 0;padding: 0;	width: auto;}
 ul.social-footer2 li {display: inline-block;padding: 0;}
 ul.social-footer2 li a:hover {background-color:#ff8d1e;}
 ul.social-footer2 li a {display: block;	height:30px;width: 30px;text-align: center;}
+
+
+//range bar
+.input-range__slider {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #7aa557;
+border: 1px solid #7aa557;
+border-radius: 100%;
+}

@@ -100,8 +100,8 @@ export default function Cart(props) {
                                                           <td className="border-0 align-middle">
                                                               <div className="row">
                                                                   <div className="col"><div className="border-0 align-middle">{item.quantity}</div></div>
-                                                                  <div className="col"></div>
-                                                              </div></td>
+                                                              </div>
+                                                              </td>
                                                           <td className="border-0 align-middle"><a href="#" onClick={(e) => delete_cart(e, item.product_id)} className="text-dark"><i className="fa fa-trash"></i></a></td>
                                                       </tr>
                                                   )}
