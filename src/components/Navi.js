@@ -64,16 +64,16 @@ export default function Navi(props) {
                 <a className="nav-link" activeClassName="active" href="/">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" activeClassName="active" href="#">About</a>
+                <a className="nav-link" activeClassName="active" href="/about">About</a>
               </li>
 
               <li className="nav-item">
                 <a className="nav-link" href="/shop">Shop</a>
               </li>
-
+{/* 
               <li className="nav-item">
                 <a className="nav-link" activeClassName="active" href="#" >Contact</a>
-              </li>
+              </li> */}
 
               {props.user
                 ?

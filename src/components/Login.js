@@ -84,8 +84,9 @@ export default function Login(props) {
       if (data.success) {
         // window.location(process.env.REACT_APP_FURL+"/login") // redirect using window
         localStorage.setItem('token', data.token)
-        console.log(data.user)
+        console.log(data)
         props.setUser(data.user)
+        props.setFbid(data.fb_id)
         history.push('/')
 
       } else {

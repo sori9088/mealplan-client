@@ -53,7 +53,7 @@ export default function Shop(props) {
                                 <div className="col-md-4 col-sm-6 my-3">
                                     <div className="product-grid">
                                         <div className="product-image">
-                                                <img className="pic-1" src={dish.img_url} />
+                                                <img className={dish.status === "Sold Out" ? "pic-1 filtered" : "pic-1"} src={dish.img_url} />
                                                 <img className="pic-2" src={dish.img_url} />
                                             <ul className="social">
                                                 <li><a href={'/detail/' + dish.id} data-tip="View detail"><i className="fa fa-search"></i></a></li>

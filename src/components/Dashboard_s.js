@@ -121,8 +121,10 @@ export default function Dashboard_s(props) {
                         </Media.Body>
                     </Media>
                 </Modal.Body>
-                <Modal.Footer>
-                </Modal.Footer>
+                <Modal.Body>
+                    <small>If you delievered the dish, click this button and keep the customer updated :) </small>
+                    <Button variant="success">Ship</Button>
+                </Modal.Body>
             </Modal>
         );
     }

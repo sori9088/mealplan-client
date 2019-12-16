@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
+import { Switch, Route } from 'react-router-dom'
+
 import Login from './components/Login'
 import Signup from './components/Signup'
-import { Switch, Route } from 'react-router-dom'
 import Navi from './components/Navi'
-import Main from './components/Main'
 import Shop from './components/Shop'
+import About from './components/About'
 import Single_product from './components/Single_product';
 import New_dish from './components/New_dish'
 import Dashboard from './components/Dashboard'
@@ -30,6 +31,7 @@ function App() {
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
   const [dishes, setDishes] = useState(null)
   const [cart, setCart] = useState(null)
+  const [fbid, setFbid] = useState('')
 
   const id = user && user.user_id
   const existingToken = localStorage.getItem("token");
@@ -47,7 +49,6 @@ function App() {
   useEffect(() => {
     getCart(id);
   }, [user])
-
 
   const getUser = async () => {
 
@@ -83,7 +84,6 @@ function App() {
       setCart(json1);
     }
   }
-  console.log(cart)
 
 
   async function getDishes() {
@@ -132,6 +132,7 @@ function App() {
       <Switch>
 
         <Route exact path='/' render={() => <Home user={user} setUser={setUser} dishes={dishes} />} />
+        <Route exact path='/about' render={()=> <About />} />
         <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} add_cart={add_cart} />} />
         <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />} />
         <Route exact path='/user/dashboard/' render={() => <Dashboard user={user} cart={cart} />} />
@@ -150,7 +151,7 @@ function App() {
         <Route exact path='/location' render={()=> <Setlocation /> } />
         {!user &&
           <>
-            <Route exact path="/login" render={() => <Login user={user} setUser={setUser} />} />
+            <Route exact path="/login" render={() => <Login user={user} setUser={setUser} setFbid={setFbid} />} />
             <Route exact path="/signup" component={Signup} />
           </>
         }

@@ -109,7 +109,6 @@ export default function Dashboard(props) {
                                                         <div className="card-type-icon with-border">{cart.cart_id}</div>
                                                     </div>
                                                     <div className="col-11 d-flex justify-content-start align-items-center">
-                                                        <div className="row">
                                                             <div className="col-2">
                                                                 <span className="title"><strong>{cart.status}</strong></span>
                                                             </div>
@@ -122,7 +121,6 @@ export default function Dashboard(props) {
                                                             <div className="col-1">
                                                                 <small className="title">X{cart.quantity}</small>
                                                             </div>
-                                                        </div>
                                                     </div>
 
                                                     <i className="material-icons end-icon"></i>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Badge } from 'react-bootstrap'
 import Rating from '@material-ui/lab/Rating';
 import {Box, Typography} from '@material-ui/core';
+import Simplemap from './Simplemap'
 
 export default function Single_product(props) {
     const [value, setValue] = useState(5);
@@ -139,7 +140,7 @@ export default function Single_product(props) {
                         <h3 className="px-3 my-3 text-center">Seller Info</h3>
                     </div>
                     <div className="row">
-                        <div className="col-xl-5 order-xl-2 mb-5 mb-xl-0 p-4 mx-3">
+                        <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0 p-2 ml-2">
                             <div className="card card-profile">
                                 <div className="row justify-content-center">
                                     <div className="col-lg-3 order-lg-2">
@@ -181,24 +182,10 @@ export default function Single_product(props) {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="col-lg-4 col-md-12 mb-4">
-
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" className="img-fluid" alt="" />
-
+                        <div className="col-xl-7 order-xl-2 mb-5 mb-xl-0 p-2">
+                        <Simplemap />
                         </div>
-
-                        <div className="col-lg-4 col-md-6 mb-4">
-
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" className="img-fluid" alt="" />
-
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 mb-4">
-
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" className="img-fluid" alt="" />
-
-                        </div> */}
-
+                        
                     </div>
                     <hr />
 

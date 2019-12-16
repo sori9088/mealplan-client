@@ -15,7 +15,7 @@ Here's a walkthrough of implemented user stories.
 
 ### Motivations + Problems
 
-When I was on my diet, I was too hard to make my daily meal planner and shop for ingredients.
+When I was on my diet, It was too hard to make my daily meal planner and shop for ingredients.
 
 Freshness and speed are important factors because it is e-commerce to serve food. 
 
@@ -44,7 +44,7 @@ The following **Advanced** features are implemented:
     * User can see order detail
 * [ ] Feedback(Rating) Form
 
-* [ ] Seller's location
+* [x] Seller's location
     * using GoogleMap API
 
 

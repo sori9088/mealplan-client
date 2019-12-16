@@ -2,7 +2,6 @@
 import React from 'react';
 import PlacesAutocomplete, {
 geocodeByAddress,
-suggestions,
 getLatLng,
 } from 'react-places-autocomplete';
 
