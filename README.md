@@ -10,7 +10,7 @@ Meal Plan is an online market place that provides simple, tasty and refreshing h
 
 Here's a walkthrough of implemented user stories.
 
-<img src='http://g.recordit.co/yvia2toYmr.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/yvia2toYmr.gif?raw=true' title='Video Walkthrough' width='300px' alt='Video Walkthrough' />
 
 
 ### Motivations + Problems
@@ -24,14 +24,14 @@ Freshness and speed are important factors because it is e-commerce to serve food
 
 The following **Basic** functionalities are completed (this is a sample):
 
-* [*] Login API using Facebook
+* [x] Login API using Facebook
     * Facebook OAuth , flask-dance, SQLAlchemy  
     
-* [*] Order & Cart
+* [x] Order & Cart
     * Create User, Product, Cart, Order, OrderItem DB table
     * User can add items to cart.
 
-* [*] Dashboard
+* [x] Dashboard
     * Sellers can see all current orders & users' infomation
     * Sellers control orders' status
 
