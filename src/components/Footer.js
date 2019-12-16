@@ -16,7 +16,7 @@ export default function Footer() {
 <div class="col-xs-12 col-sm-6 col-md-6">
 <div class="widget subscribe no-box">
 <img src={logo} width="160" alt="" href="/" />
-<p>About the company, little discription will goes here.. </p>
+<p className="mt-2">Healthy, delicious food perks, delivered from nice eateries.</p>
 </div>
 </div>
 
@@ -42,7 +42,7 @@ export default function Footer() {
 <div class="widget no-box">
 <h5 class="widget-title">Contact Us<span></span></h5>
 
-<p><a href="mailto:info@domain.com">info@domain.com</a></p>
+<ul><li><a href="mailto:info@domain.com">info@mealplan.com</a></li></ul>
 <ul class="social-footer2">
 <li class=""><a title="youtube" target="_blank" href="https://www.youtube.com/"></a></li>
 <li class=""><a href="https://www.facebook.com/" target="_blank" title="Facebook"></a></li>

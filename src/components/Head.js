@@ -30,7 +30,7 @@ export default function Head(props) {
 
                                                 <div className="top">
 
-                                                    <div className="label">Sign up</div>
+                                                    <div className="label">Check Out Our Dishes</div>
 
                                                     <div className="button-border button-border-left"></div>
                                                     <div className="button-border button-border-top"></div>

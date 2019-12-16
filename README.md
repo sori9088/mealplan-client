@@ -1,68 +1,75 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Meal Plan
 
-## Available Scripts
+Created with love by: `Hansol Park`
+  
+View online at: `http://mealplan.netlify.com/`
+  
+Meal Plan is an online market place that provides simple, tasty and refreshing health food based on well-being trends.
 
-In the project directory, you can run:
+## Video Walkthrough
 
-### `npm start`
+Here's a walkthrough of implemented user stories.
 
-Runs the app in the development mode.<br />
-Open [http://:3000](http://localhost:3000) to view it in the browser.
+<img src='http://g.recordit.co/yvia2toYmr.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+### Motivations + Problems
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When I was on my diet, I was too hard to make my daily meal planner and shop for ingredients.
 
-### `npm run build`
+Freshness and speed are important factors because it is e-commerce to serve food. 
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## User Stories
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The following **Basic** functionalities are completed (this is a sample):
 
-### `npm run eject`
+* [*] Login API using Facebook
+    * Facebook OAuth , flask-dance, SQLAlchemy  
+    
+* [*] Order & Cart
+    * Create User, Product, Cart, Order, OrderItem DB table
+    * User can add items to cart.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* [*] Dashboard
+    * Sellers can see all current orders & users' infomation
+    * Sellers control orders' status
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The following **Advanced** features are implemented:
 
-## Learn More
+* [ ] Order tracking
+    * User can see order status
+    * User can see order detail
+* [ ] Feedback(Rating) Form
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* [ ] Seller's location
+    * using GoogleMap API
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Time Spent and Lessons Learned
 
-### Analyzing the Bundle Size
+Time spent: **2.5** weeks spent in total.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+* Cart
 
-### Making a Progressive Web App
+* Order list
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-### Advanced Configuration
+## License
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+    Copyright [2019] [Hansol Park]
 
-### Deployment
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+        http://www.apache.org/licenses/LICENSE-2.0
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

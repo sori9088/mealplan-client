@@ -35,12 +35,14 @@ export default function Navi(props) {
       }
     })
     if (res.ok) {
-      props.setUser(null)  // setState the user back to null (original state from app.js)
-      localStorage.clear('token')
-      history.push('/')
+      // props.setUser(null)  // setState the user back to null (original state from app.js)
+      // localStorage.clear('token')
+      alert("Successfully logged out :)))")
+      // history.push('/')
+      window.location.replace("/")
 
     } else {
-      alert(" CANNOT LOG OUT")
+      alert("Something wrong!")
     }
   }
 
@@ -51,7 +53,7 @@ export default function Navi(props) {
   return (
     <>
       <nav className={scrolling ? "navbar-light navbar navbar-expand-lg fixed-top transition bg" : "navbar-dark navbar navbar-expand-lg fixed-top transition"}>
-        <div className="container transition my-3" style={{ color: scrolling ? 'black' : 'white' }}>
+        <div className="container transition" style={{ color: scrolling ? 'black' : 'white' }}>
           <a className="navbar-brand"><img src={logo} width="170" alt="" /></a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -62,11 +64,13 @@ export default function Navi(props) {
                 <a className="nav-link" activeClassName="active" href="/">Home</a>
               </li>
               <li className="nav-item">
+                <a className="nav-link" activeClassName="active" href="#">About</a>
+              </li>
+
+              <li className="nav-item">
                 <a className="nav-link" href="/shop">Shop</a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" activeClassName="active" href="#">Menu</a>
-              </li>
+
               <li className="nav-item">
                 <a className="nav-link" activeClassName="active" href="#" >Contact</a>
               </li>

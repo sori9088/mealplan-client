@@ -1,74 +1,279 @@
-import React from 'react'
-import {Button} from 'react-bootstrap'
+import React, { useState, useEffect } from 'react'
+import { Spinner, Button, Tooltip, OverlayTrigger, Modal, ButtonToolbar, Media, Image } from 'react-bootstrap'
+import moment from 'moment'
+
 
 export default function Dashboard_s(props) {
+
+    const [products, setProducts] = useState(null)
+    const [sellerorder, setSellerorder] = useState(null)
+    const [modalShow, setModalShow] = useState(false);
+    const [order, setOrder] = useState(null)
+
+
+    useEffect(() => {
+        getProduct();
+        getSellerorder();
+    }, [props.user])
+
+
+    async function getProduct() {
+        const response = await fetch(process.env.REACT_APP_BURL + "/product/seller", {
+
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Token ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (response.ok) {
+            const json = await response.json();
+            setProducts(json);
+
+        }
+    }
+
+    async function getSellerorder() {
+        const response = await fetch(process.env.REACT_APP_BURL + "/seller/order", {
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Token ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (response.ok) {
+            const json = await response.json();
+            setSellerorder(json)
+        }
+    }
+
+    const soldout = async (id) => {
+
+        let response = await fetch(process.env.REACT_APP_BURL + "/product/soldout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                "product_id": id
+            })
+        });
+
+        if (response.ok) {
+            const data = await response.json()
+            if (data.success) {
+                alert('Successfully discontinued :)))')
+                setProducts(data)
+            } else {
+                alert(data.message)
+            }
+        }
+    }
+
+
+    function renderTooltip(props) {
+        return <Tooltip {...props}>Order Number</Tooltip>;
+    }
+
+
+    function MyVerticallyCenteredModal(props) {
+        console.log(order)
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        {order && order.product}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Media>
+                        <Image
+                            width={64}
+                            height={64}
+                            className="mr-3"
+                            src={order && order.img_url}
+                            alt="Generic placeholder"
+                            rounded
+                        />
+                        <Media.Body>
+                            <div className="row">
+                                <div className="col-9">
+                                <h5>Media Heading</h5>
+                                <p>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                    ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+                                    tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+                                    Donec lacinia congue felis in faucibus.
+                                </p>
+                                </div>
+                                <div className="col-3 d-flex justify-content-center align-items-center">
+                                 <div>
+                                <i class="fas fa-user"></i> {order && order.user_name} 
+                                </div>
+                                </div>
+                            </div>
+                        </Media.Body>
+                    </Media>
+                </Modal.Body>
+                <Modal.Footer>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
+    const handleShow = curorder => {
+        setOrder(curorder);
+        setModalShow(true);
+    };
+
     return (
         <>
-        <div class="row">
-            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-                <div class="card card-profile">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 order-lg-2">
-                            <div class="card-profile-image">
-                                    <img src={props.user && props.user.avatar_url} class="rounded-circle" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0">
-                    </div>
-                    <div class="card-body pt-0 pt-md-4 mt-xs-4">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-profile-stats d-flex justify-content-center mt-lg-5">
-                                    <div>
-                                        <span class="heading">2</span>
-                                        <span class="description">Orders</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">6</span>
-                                        <span class="description">Products</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">1</span>
-                                        <span class="description">Comments</span>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                        <div className="card card-profile">
+                            <div className="row justify-content-center">
+                                <div className="col-lg-3 order-lg-2">
+                                    <div className="card-profile-image">
+                                        <img src={props.user && props.user.avatar_url} className="rounded-circle" />
                                     </div>
                                 </div>
                             </div>
+                            <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                <div className="d-flex justify-content-between">
+                                </div>
+                            </div>
+                            <div className="card-body pt-0 pt-md-1">
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card-profile-stats d-flex justify-content-center mt-md-1">
+                                            <div>
+                                                <span className="heading">{sellerorder && sellerorder.orders.length}</span>
+                                                <span className="description">Orders</span>
+                                            </div>
+                                            <div>
+                                                <span className="heading">{products && products.quantity}</span>
+                                                <span className="description">Products</span>
+                                            </div>
+                                            <div>
+                                                <span className="heading">1</span>
+                                                <span className="description">Comments</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="text-center">
+                                    <h3>
+                                        {props.user && props.user.user_name}
+                                    </h3>
+                                    <div>
+                                        <i className="ni education_hat mr-2"></i>Seller</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <h3>
-                            {props.user && props.user.user_name}
-                            </h3>
-                            <div>
-                                <i class="ni education_hat mr-2"></i>Seller</div>
+                    </div>
+                    <div className="col-xl-8 order-xl-2 mb-5 mb-xl-0">
+                        <h5><i class="fas fa-shopping-bag"></i> Manage orders</h5>
+                        <div className="mt-2">
+                            {sellerorder && sellerorder.orders.map((order) => order.map((item) =>
+                                <div className="border-card row mx-3">
+                                    <div className="col-1">
+                                        <OverlayTrigger
+                                            placement="top"
+                                            delay={{ show: 250, hide: 300 }}
+                                            overlay={renderTooltip}
+                                        >
+                                            <div className="card-type-icon with-border">{item.cart_id}</div>
+                                        </OverlayTrigger>
+                                    </div>
+                                    <div className="col-11 d-flex justify-content-start">
+                                        <div className="col-2">
+                                            <span className="title"><strong><i class="fas fa-user"></i> {item.user_name}</strong></span>
+                                        </div>
+                                        <div className="col-7">
+                                            <span className="caption">{item.product}</span>
+                                        </div>
+
+                                        <div className="col-1">
+                                            <small className="title">X {item.quantity}</small>
+                                        </div>
+                                        <div className="col-1">
+                                            <ButtonToolbar>
+                                                <Button size="sm" variant="success" onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleShow(item)
+                                                }}>
+                                                    Detail
+                                            </Button>
+
+                                                <MyVerticallyCenteredModal
+                                                    show={modalShow}
+                                                    onHide={() => setModalShow(false)}
+                                                />
+                                            </ButtonToolbar>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
+                </div>
+                <div className="row mt-3 m-md-3">
+                    <div className="col-md-12">
+                        <div className="row d-flex justify-content-between">
+                            <h5><i className="fas fa-store"></i> Manage your products</h5>
+                            <a href="/new_dish"><div className="addbutton">
+                                <div className="icon">
+                                    <i className="fas fa-plus"></i>
+                                </div>
+                            </div></a>
+                        </div>
+                    </div>
+                    <div className="col-md-12">
+                        {!products ?
+                            <>
+                                <div className="d-flex justify-content-center" style={{ "height": "300px" }}>
+                                    <Spinner animation="border" variant="success" />
+                                </div>
+                            </> :
+                            <>
+                            </>}
+                        <div className="row">
+                            {products && products.dishes.map((dish) =>
+                                <div className="col-md-3 col-sm-6 my-3">
+                                    <div className="product-grid">
+                                        <div className="product-image">
+                                            <img className="pic-1" src={dish.img_url} />
+                                            <img className="pic-2" src={dish.img_url} />
+                                            <ul className="social">
+                                                <li><a href={'/detail/' + dish.id} data-tip="View detail"><i className="fa fa-search"></i></a></li>
+                                                <li><a data-tip="Discontinued"><i onClick={(e) => {
+                                                    e.preventDefault();
+                                                    soldout(dish.id)
+                                                }} class="far fa-times-circle"></i></a></li>                                            </ul>
+                                        </div>
+
+                                        <div className="product-content">
+                                            <h3 className="title"><a href={'/detail/' + dish.id}>{dish.name}</a></h3>
+                                            <div className="price">$ {dish.price}
+                                            </div>
+                                            {!dish.status ? <>In stock</> : <>Sold out</>}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-8 order-xl-2 mb-5 mb-xl-0">
-            <h5>Manage orders</h5>
-            <div class="border-card">
-                <div class="card-type-icon with-border">1</div>
-                <div class="content-wrapper">
-                    <div class="label-group fixed">
-                        <p class="title">EG links</p>
-                        <p class="caption">Einheit</p>
-                    </div>
-                    <div class="min-gap"></div>
-                    <div class="label-group">
-                        <p class="title">Marc-Philipp Weber</p>
-                        <p class="caption">Eigentümer</p>
-                    </div>
-                    <div class="min-gap"></div>
-                    <div class="label-group">
-                        <p class="title">Alexander Oemisch</p>
-                        <p class="caption">Mieter</p>
-                    </div>
-                </div>
-                <i class="material-icons end-icon">more_vert</i>
-            </div>
-            </div>
-        </div>
+
         </>
     )
 }

@@ -151,7 +151,7 @@ export default function Signup() {
               </Grid>
               <Grid item xs={12}>
                 <Form.Group controlId="exampleForm.ControlSelect1">
-                  <label>Example select</label>
+                  <label>What you wanna be?</label>
                   <Form.Control as="select" name="seller">
                     <option value={false} >customer</option>
                     <option value={true}>seller</option>

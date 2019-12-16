@@ -5,7 +5,7 @@ import Home from './Home'
 export default function Main(props) {
     return (
         <div>
-              <Home user={props.user} />
+              <Home user={props.user} dishes={props.dishes} />
         </div>
     )
 }

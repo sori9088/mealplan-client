@@ -65,6 +65,7 @@ export default function Checkout(props) {
       const data = await response.json()
       addAdd(ev,id);
       if (data.success) {
+        props.setCart(data.data)
         history.push('/user/checkout/complete')
       } else {
         alert(data.message)

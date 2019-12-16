@@ -27,13 +27,16 @@ export default function Shop(props) {
             <Container>
                 <div className="row my-5">
                     <div className="col-md-3">
-                        <div className="py-3 text-center">
+                        <h5>Filter</h5>
+                        <div className="filter">
+                        <div className="mx-2 p-4 text-center">
                             <InputRange
                                 maxValue={5}
                                 minValue={0}
                                 value={rating}
                                 onChange={value => onRatingSliderChange(value)} />
                             <span className="my-3">Rating</span>
+                        </div>
                         </div>
                     </div>
                     <div className="col-md-9">
@@ -50,23 +53,27 @@ export default function Shop(props) {
                                 <div className="col-md-4 col-sm-6 my-3">
                                     <div className="product-grid">
                                         <div className="product-image">
-                                            <a href="#">
                                                 <img className="pic-1" src={dish.img_url} />
                                                 <img className="pic-2" src={dish.img_url} />
-                                            </a>
                                             <ul className="social">
                                                 <li><a href={'/detail/' + dish.id} data-tip="View detail"><i className="fa fa-search"></i></a></li>
-                                                <li><a data-tip="Add to Cart"><i onClick={(e) => {
-                                                    e.preventDefault();
-                                                    props.add_cart(dish.id, 1)
-                                                }} className="fa fa-shopping-cart"></i></a></li>
+                                                {dish.status ==="Sold Out" ? 
+                                                <></>
+                                            :
+                                            <>
+                                            <li><a data-tip="Add to Cart"><i onClick={(e) => {
+                                                e.preventDefault();
+                                                props.add_cart(dish.id, 1)
+                                            }} className="fa fa-shopping-cart"></i></a></li>
+                                            </>}
+                                                
                                             </ul>
                                             <span className="product-new-label">{dish.seller}</span>
-                                            <span className="product-discount-label">20%</span>
+                                            <span className="product-discount-label">{dish.status}</span>
                                         </div>
 
                                         <div className="product-content">
-                                            <h3 className="title"><a href="#">{dish.name}</a></h3>
+                                            <h3 className="title"><a href={'/detail/' + dish.id}>{dish.name}</a></h3>
                                             <div className="price">$ {dish.price}
                                             </div>
                                             <ul className="rating">
