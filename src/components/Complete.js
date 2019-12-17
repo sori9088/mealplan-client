@@ -15,6 +15,8 @@ export default function Complete(props) {
     }
 
 
+
+
     return (
         <div>
             <div className="dashboard">
@@ -38,7 +40,7 @@ export default function Complete(props) {
                     <hr />
                     <Row className="p-3">
                         <div className="table-responsive">
-                            <table className="table">
+                            {/* <table className="table">
                                 <thead>
                                     <tr>
                                         <th scope="col" className="border-0 bg-light">
@@ -56,7 +58,7 @@ export default function Complete(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {props.cart && props.cart.items_cart.map((item) =>
+                                    {order && props.cart.items_cart.map((item) =>
                                         <tr>
                                             <th scope="row" className="border-0">
                                                 <div className="p-2">
@@ -81,11 +83,11 @@ export default function Complete(props) {
                                         </tr>
                                     )}
                                 </tbody>
-                            </table>
+                            </table> */}
                         </div>
                     </Row>
                     <hr />
-                    <Row className="d-flex justify-content-end">
+                    {/* <Row className="d-flex justify-content-end">
                         <div className="col-lg-6">
                             <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
                             <div className="p-4">
@@ -98,7 +100,7 @@ export default function Complete(props) {
                                 </ul>
                             </div>
                         </div>
-                    </Row>
+                    </Row> */}
                     <Row className="d-flex justify-content-around">
                         <a href="/user/dashboard"><Button variant="success">Go to dashboard</Button></a>
                         <a href="/shop"><Button variant="success">Continue to shop</Button></a>

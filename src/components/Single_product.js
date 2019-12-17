@@ -140,7 +140,7 @@ export default function Single_product(props) {
                         <h3 className="px-3 my-3 text-center">Seller Info</h3>
                     </div>
                     <div className="row">
-                        <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0 p-2 ml-2">
+                        <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0 ml-2">
                             <div className="card card-profile">
                                 <div className="row justify-content-center">
                                     <div className="col-lg-3 order-lg-2">
