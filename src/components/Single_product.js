@@ -137,7 +137,7 @@ export default function Single_product(props) {
 
                     <hr />
                     <div>
-                        <h3 className="px-3 my-3 text-center">Seller Info</h3>
+                        <h3 className="px-3 my-3 text-center mb-md-5">Seller Info</h3>
                     </div>
                     <div className="row">
                         <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0 ml-2">
