@@ -47,6 +47,9 @@ export default function Dashboard_s(props) {
         }
     }
 
+
+    console.log(sellerorder)
+
     const soldout = async (id) => {
 
         let response = await fetch(process.env.REACT_APP_BURL + "/product/soldout", {

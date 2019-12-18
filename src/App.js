@@ -29,9 +29,12 @@ function App() {
   const key = process.env.STRIPE_API
 
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
-  const [dishes, setDishes] = useState(null)
+  const [dishes, setDishes] = useState([])
+  const [filteredDishes, setFiltereddishes] = useState([])
   const [cart, setCart] = useState(null)
   const [fbid, setFbid] = useState('')
+  const [query, setQuery] = useState(" ")
+
 
   const id = user && user.user_id
   const existingToken = localStorage.getItem("token");
@@ -50,6 +53,18 @@ function App() {
     getCart(id);
   }, [user])
 
+
+
+
+  const onChangehandle = (value) => {
+    const filter = dishes.filter(dish => dish.seller.toLowerCase().includes(value.toLowerCase()))
+    setFiltereddishes(filter)
+  }
+
+
+
+
+
   const getUser = async () => {
 
     const token = existingToken || accessToken
@@ -57,7 +72,7 @@ function App() {
       headers: {
         Authorization: `Token ${token}`
       }
-    })
+  })
 
     if (res.ok) { // user is logged in
       const data = await res.json()  // carefull you might be stuck here bcos of "await"
@@ -72,7 +87,7 @@ function App() {
 
 
   const getCart = async () => {
-    const response1 = await fetch(process.env.REACT_APP_BURL + "/cart/get" , {
+    const response1 = await fetch(process.env.REACT_APP_BURL + "/cart/get", {
       headers: {
         'Content-Type': "application/json",
         Authorization: `Token ${localStorage.getItem('token')}`
@@ -95,7 +110,9 @@ function App() {
 
     if (response.ok) {
       const json = await response.json();
-      setDishes(json);
+      const data = json && json.dishes.slice()
+      setDishes(data);
+      setFiltereddishes(data)
 
     }
   }
@@ -125,6 +142,7 @@ function App() {
   };
 
 
+ console.log(filteredDishes)
 
   return (
     <>
@@ -132,8 +150,8 @@ function App() {
       <Switch>
 
         <Route exact path='/' render={() => <Home user={user} setUser={setUser} dishes={dishes} />} />
-        <Route exact path='/about' render={()=> <About />} />
-        <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={dishes} add_cart={add_cart} />} />
+        <Route exact path='/about' render={() => <About />} />
+        <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={filteredDishes} onChangehandle={onChangehandle} add_cart={add_cart}  />} />
         <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />} />
         <Route exact path='/user/dashboard/' render={() => <Dashboard user={user} cart={cart} />} />
         <Route exact path='/new_dish' render={() => <New_dish user={user} setDishes={setDishes} />} />
@@ -147,8 +165,8 @@ function App() {
           </StripeProvider>
         } />
         <Route exact path='/user/cart' render={() => <Cart user={user} cart={cart} setCart={setCart} />} />
-        <Route exact path='/user/checkout/complete' render={()=> <Complete user={user} cart={cart} /> } />
-        <Route exact path='/location' render={()=> <Setlocation /> } />
+        <Route exact path='/user/checkout/complete' render={() => <Complete user={user} cart={cart} />} />
+        <Route exact path='/location' render={() => <Setlocation />} />
         {!user &&
           <>
             <Route exact path="/login" render={() => <Login user={user} setUser={setUser} setFbid={setFbid} />} />
