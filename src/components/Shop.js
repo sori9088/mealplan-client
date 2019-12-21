@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Button, Spinner,Form, FormControl } from 'react-bootstrap'
+import { Container, Button, Spinner, Form, FormControl } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
@@ -27,20 +27,26 @@ export default function Shop(props) {
             <Container>
                 <div className="row my-5">
                     <div className="col-md-3">
-                        <h5>Filter</h5>
-                        <div className="filter">
-                            <div className="mx-2 p-4 text-center">
-                                <InputRange
-                                    maxValue={5}
-                                    minValue={0}
-                                    value={rating}
-                                    onChange={value => onRatingSliderChange(value)} />
-                                <span className="my-3">Rating</span>
-                                <Form onChange={(e) => {
-                                props.onChangehandle(e.target.value);
-                                }}>
-                                    <FormControl type="text" placeholder="Search by seller" className="mr-sm-2" />
-                                </Form>
+                        <div className="my-1">
+                            <h5>Filter</h5>
+                            <div className="filter">
+                                <div className="mx-2 p-4 text-center">
+                                    <InputRange
+                                        maxValue={5}
+                                        minValue={0}
+                                        value={rating}
+                                        onChange={value => onRatingSliderChange(value)} />
+                                    <span className="my-3">Rating</span>
+                                </div>
+                                <div className="my-1">
+                                <div className="mx-2 p-4 text-center">
+                                    <Form onChange={(e) => {
+                                        props.onChangehandle(e.target.value);
+                                    }}>
+                                        <FormControl type="text" placeholder="Search by seller" className="mr-sm-2" />
+                                    </Form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

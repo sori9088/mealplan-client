@@ -15,7 +15,7 @@ export default function Home(props) {
                     <h1 className='text-center my-5 main-f'>Get ready to get hungry?</h1>
                     <div className="d-flex justify-content-center">
                         <Carousel className="mb-3 w-50">
-                            {props.dishes && props.dishes.dishes.map((item) =>
+                            {props.dishes && props.dishes.map((item) =>
                                 <Carousel.Item>
                                     <Image
                                         className="d-block w-100"

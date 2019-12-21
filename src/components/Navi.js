@@ -70,14 +70,15 @@ export default function Navi(props) {
               <li className="nav-item">
                 <a className="nav-link" href="/shop">Shop</a>
               </li>
-{/* 
-              <li className="nav-item">
-                <a className="nav-link" activeClassName="active" href="#" >Contact</a>
-              </li> */}
+
 
               {props.user
                 ?
                 <>
+                
+              <li className="nav-item">
+                <a className="nav-link" activeClassName="active" href="#" >Become a seller</a>
+              </li>
                   <li>
                     <ul className="nav navbar-nav navbar-right">
                       <li className="nav-item dropdown">
