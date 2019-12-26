@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Badge } from 'react-bootstrap'
 import Rating from '@material-ui/lab/Rating';
-import {Box, Typography} from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import Simplemap from './Simplemap'
+import { useHistory } from 'react-router-dom';
+import moment from 'moment'
+
+
 
 export default function Single_product(props) {
     const [value, setValue] = useState(5);
@@ -10,18 +14,21 @@ export default function Single_product(props) {
     const product_id = props.match.params.id
     const [quantity, setQuantity] = useState(1)
     const [sellerorder, setSellerorder] = useState(null)
-
+    const [input, setInput] = useState({ rating: "5" })
+    const history = useHistory()
+    const [comments, setComments] = useState(null)
 
     useEffect(() => {
         getDish(product_id);
+        getComment(product_id);
     }, []);
 
     useEffect(() => {
         getSellerorder();
     }, [dish]);
 
-    
-    
+
+
 
     async function getDish(id) {
         const response = await fetch(process.env.REACT_APP_BURL + "/product/detail/" + id, {
@@ -50,7 +57,8 @@ export default function Single_product(props) {
                 Authorization: `Token ${localStorage.getItem('token')}`
             },
             body: JSON.stringify({
-                "id" :seller_id })
+                "id": seller_id
+            })
         });
 
         if (response.ok) {
@@ -58,7 +66,83 @@ export default function Single_product(props) {
             setSellerorder(json)
         }
     }
-    console.log(sellerorder)
+
+    async function getComment(id) {
+        const response = await fetch(process.env.REACT_APP_BURL + "/product/comment/get/" + id, {
+            headers: {
+                'Content-Type': "application/json"
+            }
+        });
+
+        if (response.ok) {
+            const json = await response.json();
+            setComments(json);
+        }
+    }
+
+
+    const comment = e => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const addComment = async e => {
+        e.preventDefault()
+
+        const res = await fetch(process.env.REACT_APP_BURL + "/product/comment/new", {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Token ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                id: product_id,
+                comment: input
+            })
+        })
+        if (res.ok) {
+            const data = await res.json()
+            if (data.success) {
+                console.log(data)
+                setComments(data)
+            } else {
+                alert(data.message)
+            }
+        }
+
+
+    };
+
+    console.log(comments)
+
+    const deleteComment = async (e, id) => {
+        e.preventDefault()
+
+        const response = await fetch(process.env.REACT_APP_BURL + "/product/comment/delete", {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Token ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                p_id: product_id,
+                id: id
+            })
+        })
+        if (response.ok) {
+            const data = await response.json()
+            if (data.success) {
+                console.log(data)
+                setComments(data)
+            } else {
+                alert(data.message)
+            }
+        }
+    }
+
+
 
 
     return (
@@ -137,7 +221,7 @@ export default function Single_product(props) {
 
                     <hr />
                     <div>
-                        <h3 className="px-3 my-3 text-center mb-md-5">Seller Info</h3>
+                        <h3 className="px-3 my-5 text-center mb-md-5">Seller Info</h3>
                     </div>
                     <div className="row">
                         <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0 ml-2">
@@ -183,9 +267,9 @@ export default function Single_product(props) {
                             </div>
                         </div>
                         <div className="col-xl-7 order-xl-2 mb-5 mb-xl-0 p-2">
-                        <Simplemap />
+                            <Simplemap />
                         </div>
-                        
+
                     </div>
                     <hr />
 
@@ -198,19 +282,19 @@ export default function Single_product(props) {
                         <div class="col-md-10">
                             <div class="widget-area no-padding blank">
                                 <div class="status-upload">
-                                    <form>
-                                        <textarea placeholder="Add a comment..." ></textarea>
+                                    <form onSubmit={(e) => addComment(e)} onChange={e => comment(e)}>
+                                        <textarea name="comment" placeholder="Add a comment..." ></textarea>
                                         <ul>
                                             <li className="pt-2">
-                                            <Box component="fieldset" mb={3} borderColor="transparent">
-                                                <Rating
-                                                    name="simple-controlled"
-                                                    value={value}
-                                                    onChange={(event, newValue) => {
-                                                        setValue(newValue);
-                                                    }}
-                                                />
-                                            </Box>
+                                                <Box component="fieldset" mb={3} borderColor="transparent">
+                                                    <Rating
+                                                        name="rating"
+                                                        value={value}
+                                                        onChange={(event, newValue) => {
+                                                            setValue(newValue);
+                                                        }}
+                                                    />
+                                                </Box>
                                             </li>
                                         </ul>
                                         <button type="submit" class="btn btn-success green"><i class="far fa-comment-dots"></i></button>
@@ -220,30 +304,37 @@ export default function Single_product(props) {
                         </div>
                     </div>
                     <div className="d-flex justify-content-center py-3">
-                        <div class="col-md-10">
-                            <div class="card">
-                                <div class="card-body">
-
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
-                                            <p class="text-secondary text-center">15 Minutes Ago</p>
+                        <div className="col-md-10">
+                            <div className="card">
+                                {comments && comments.comments.length === 0 ? <>
+                                <h5 className="text-muted text-center my-4">Nothing to see...</h5>
+                                </> 
+                                : <>
+                                <div className="card-body">
+                                    {comments && comments.comments.map((comment) =>
+                                        <div className="row">
+                                            <div className="col-md-2">
+                                                <img src={comment.avatar_url} className="img rounded-circle img-fluid" />
+                                                <p className="text-secondary text-center">{moment(comment.created).fromNow()}</p>
+                                            </div>
+                                            <div className="col-md-10">
+                                                <div className="justify-content-between d-flex">
+                                                    <div>
+                                                        <a className="float-left mr-3" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{comment.user_name}</strong></a>
+                                                        <Rating name="read-only" value={comment.rating} readOnly />
+                                                    </div>
+                                                    <div>
+                                                        <a onClick={(e) => deleteComment(e, comment.id)}><i class="fas fa-trash-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div className="clearfix"></div>
+                                                <p>{comment.body}</p>
+                                            </div>
                                         </div>
-                                        <div class="col-md-10">
-                                            <p>
-                                                <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
-                                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-
-                                            </p>
-                                            <div class="clearfix"></div>
-                                            <p>Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
+                                </>}
+                                
                             </div>
                         </div>
                     </div>

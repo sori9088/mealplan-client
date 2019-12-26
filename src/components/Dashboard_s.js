@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Spinner, Button, Tooltip, OverlayTrigger, Modal, ButtonToolbar, Media, Image } from 'react-bootstrap'
+import { Spinner, Button, Tooltip, OverlayTrigger, Modal, Badge, Media, Image } from 'react-bootstrap'
 import moment from 'moment'
+import { useHistory } from 'react-router-dom';
+
 
 
 export default function Dashboard_s(props) {
@@ -9,6 +11,7 @@ export default function Dashboard_s(props) {
     const [sellerorder, setSellerorder] = useState(null)
     const [modalShow, setModalShow] = useState(false);
     const [order, setOrder] = useState(null)
+    const history = useHistory()
 
 
     useEffect(() => {
@@ -107,18 +110,20 @@ export default function Dashboard_s(props) {
                         <Media.Body>
                             <div className="row">
                                 <div className="col-9">
-                                <h5>Media Heading</h5>
-                                <p>
-                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                    ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-                                    tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-                                    Donec lacinia congue felis in faucibus.
+                                    <h5>Status :
+                                   {order && order.shipped ?
+                                            <>Shipped Out</>
+                                            :
+                                            <>Ordered</>
+                                        }</h5>
+                                    <p>
+                                        lala
                                 </p>
                                 </div>
                                 <div className="col-3 d-flex justify-content-center align-items-center">
-                                 <div>
-                                <i class="fas fa-user"></i> {order && order.user_name} 
-                                </div>
+                                    <div>
+                                        <i class="fas fa-user"></i> {order && order.user_name}
+                                    </div>
                                 </div>
                             </div>
                         </Media.Body>
@@ -126,7 +131,16 @@ export default function Dashboard_s(props) {
                 </Modal.Body>
                 <Modal.Body>
                     <small>If you delievered the dish, click this button and keep the customer updated :) </small>
-                    <Button variant="success">Ship</Button>
+                    {order && order.shipped ?
+                        <>
+                            <Button variant="danger" disabled>Shipped Out</Button>
+                        </>
+                        :
+                        <>
+                            <Button variant="success" onClick={(e) => handleShipped(e, order.product_id, order.cart_id)}>Ship</Button>
+                        </>
+                    }
+
                 </Modal.Body>
             </Modal>
         );
@@ -136,6 +150,33 @@ export default function Dashboard_s(props) {
         setOrder(curorder);
         setModalShow(true);
     };
+
+
+    const handleShipped = async (e, pid, cid) => {
+        e.preventDefault();
+
+        let response = await fetch(process.env.REACT_APP_BURL + "/seller/shipped", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                "product_id": pid,
+                "cart_id": cid
+            })
+        });
+
+        if (response.ok) {
+            const data = await response.json()
+            if (data) {
+                alert('Successfully shipped out :)))')
+                setSellerorder(data)
+                history.push('/user/dashboard')
+            }
+        }
+    }
+
 
     return (
         <>
@@ -187,45 +228,48 @@ export default function Dashboard_s(props) {
                         <h5><i class="fas fa-shopping-bag"></i> Manage orders</h5>
                         <div className="mt-2">
                             {sellerorder && sellerorder.orders.map((order) => order.map((item) =>
-                                <div className="border-card row mx-3">
-                                    <div className="col-1">
-                                        <OverlayTrigger
-                                            placement="top"
-                                            delay={{ show: 250, hide: 300 }}
-                                            overlay={renderTooltip}
-                                        >
-                                            <div className="card-type-icon with-border">{item.cart_id}</div>
-                                        </OverlayTrigger>
-                                    </div>
-                                    <div className="col-11 d-flex justify-content-start">
-                                        <div className="col-2">
-                                            <span className="title"><strong><i class="fas fa-user"></i> {item.user_name}</strong></span>
-                                        </div>
-                                        <div className="col-7">
-                                            <span className="caption">{item.product}</span>
-                                        </div>
+                            <>
 
+                                    <MyVerticallyCenteredModal
+                                        show={modalShow}
+                                        onHide={() => setModalShow(false)}
+                                    />
+                                    <div className="border-card row mx-3" onClick={(e) => {
+                                        e.preventDefault();
+                                        handleShow(item)
+                                    }}>
                                         <div className="col-1">
-                                            <small className="title">X {item.quantity}</small>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                delay={{ show: 250, hide: 300 }}
+                                                overlay={renderTooltip}
+                                            >
+                                                <div className="card-type-icon with-border">{item.cart_id}</div>
+                                            </OverlayTrigger>
                                         </div>
-                                        <div className="col-1">
-                                            <ButtonToolbar>
-                                                <Button size="sm" variant="success" onClick={(e) => {
-                                                    e.preventDefault();
-                                                    handleShow(item)
-                                                }}>
-                                                    Detail
-                                            </Button>
+                                        <div className="col-11 d-flex justify-content-start">
+                                            <div className="col-2">
+                                                <span className="title"><strong><i class="fas fa-user"></i> {item.user_name}</strong></span>
+                                            </div>
+                                            <div className="col-7">
+                                                <span className="caption">{item.product}</span>
+                                            </div>
 
-                                                <MyVerticallyCenteredModal
-                                                    show={modalShow}
-                                                    onHide={() => setModalShow(false)}
-                                                />
-                                            </ButtonToolbar>
+                                            <div className="col-1">
+                                                <small className="title">X {item.quantity}</small>
+                                            </div>
+                                            <div className="col-1">
+                                                {item.shipped ? 
+                                                <><Badge variant="danger">Shipped Out</Badge></> 
+                                                :
+                                                <><Badge variant="success">Ordered</Badge></>
+                                                }
+                                        </div>
                                         </div>
                                     </div>
-                                </div>
+                                    </>
                             ))}
+
                         </div>
 
                     </div>

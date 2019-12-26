@@ -25,7 +25,6 @@ import 'react-input-range/lib/css/index.css'
 
 function App() {
   const stripe = useStripe()
-  const history = useHistory()
   const key = process.env.STRIPE_API
 
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}

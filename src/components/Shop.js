@@ -1,17 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Button, Spinner, Form, FormControl } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
+import Rating from '@material-ui/lab/Rating';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 
 
 export default function Shop(props) {
     const [rating, setRating] = useState({ min: 0, max: 5 })
+    const [comments, setComments] = useState(null)
+
+
+    useEffect(() => {
+        getComment();
+    }, []);
 
 
     const onRatingSliderChange = (value) => {
         setRating(value)
     }
+
+
+    async function getComment() {
+        const response = await fetch(process.env.REACT_APP_BURL + "/product/comment/getall", {
+            headers: {
+                'Content-Type': "application/json"
+            }
+        });
+
+        if (response.ok) {
+            const json = await response.json();
+            const data = json && json.comments.slice()
+            setComments(data);
+        }
+    }
+
+    console.log(comments)
+
+
+
 
     return (
         <>
@@ -88,11 +115,7 @@ export default function Shop(props) {
                                             <div className="price">$ {dish.price}
                                             </div>
                                             <ul className="rating">
-                                                <li className="fa fa-star"></li>
-                                                <li className="fa fa-star"></li>
-                                                <li className="fa fa-star"></li>
-                                                <li className="fa fa-star"></li>
-                                                <li className="fa fa-star disable"></li>
+                                            <Rating name="size-small" value={4.5} size="small" readOnly />
                                             </ul>
                                         </div>
                                     </div>
