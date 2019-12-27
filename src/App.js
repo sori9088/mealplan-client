@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 import { Switch, Route } from 'react-router-dom'
-
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Navi from './components/Navi'
@@ -30,9 +31,10 @@ function App() {
   const [user, setUser] = useState(null) // it is an object, by default it is null, if the user is logged in, it will become {id:1, email:"hansol@gmail.com", name:"hansol"}
   const [dishes, setDishes] = useState([])
   const [filteredDishes, setFiltereddishes] = useState([])
+  const [newDishes , setNewDishes] = useState([])
   const [cart, setCart] = useState(null)
-  const [fbid, setFbid] = useState('')
-  const [query, setQuery] = useState(" ")
+  const [rating, setRating] = useState({ min: 0, max: 5 })
+
 
 
   const id = user && user.user_id
@@ -60,6 +62,21 @@ function App() {
     setFiltereddishes(filter)
   }
 
+
+  
+  const onRatingSliderChange = (value) => {
+    setRating(value)
+
+    const newDishes = dishes.filter(dish => {
+        const isAboveMinimumRating = dish.rating.rating >= value.min
+        const isBelowMaximumRating = dish.rating.rating <= value.max
+        return isAboveMinimumRating && isBelowMaximumRating
+      })
+    
+    console.log(newDishes)
+    setFiltereddishes(newDishes)
+
+}
 
 
 
@@ -145,12 +162,12 @@ function App() {
 
   return (
     <>
+      <ReactNotification />
       <Navi user={user} setUser={setUser} cart={cart} />
       <Switch>
-
         <Route exact path='/' render={() => <Home user={user} setUser={setUser} dishes={dishes} />} />
         <Route exact path='/about' render={() => <About />} />
-        <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={filteredDishes} onChangehandle={onChangehandle} add_cart={add_cart}  />} />
+        <Route exact path='/shop' render={() => <Shop user={user} setUser={setUser} dishes={filteredDishes} setRating={setRating} rating={rating} onRatingSliderChange={onRatingSliderChange} getDishes={getDishes} onChangehandle={onChangehandle} add_cart={add_cart}  />} />
         <Route exact path='/detail/:id' render={(props) => <Single_product user={user} dishes={dishes} setDishes={setDishes} {...props} add_cart={add_cart} />} />
         <Route exact path='/user/dashboard/' render={() => <Dashboard user={user} cart={cart} />} />
         <Route exact path='/new_dish' render={() => <New_dish user={user} setDishes={setDishes} />} />
@@ -168,7 +185,7 @@ function App() {
         <Route exact path='/location' render={() => <Setlocation />} />
         {!user &&
           <>
-            <Route exact path="/login" render={() => <Login user={user} setUser={setUser} setFbid={setFbid} />} />
+            <Route exact path="/login" render={() => <Login user={user} setUser={setUser} />} />
             <Route exact path="/signup" component={Signup} />
           </>
         }

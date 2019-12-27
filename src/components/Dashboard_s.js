@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Spinner, Button, Tooltip, OverlayTrigger, Modal, Badge, Media, Image } from 'react-bootstrap'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom';
+import { store } from 'react-notifications-component';
+
 
 
 
@@ -170,7 +172,20 @@ export default function Dashboard_s(props) {
         if (response.ok) {
             const data = await response.json()
             if (data) {
-                alert('Successfully shipped out :)))')
+                // alert('Successfully shipped out :)))')
+                store.addNotification({
+                    title: "Shipped Out!",
+                    message: "Successfully shipped out :)))",
+                    type: "success",
+                    insert: "top",
+                    container: "bottom-center",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 3000,
+                      onScreen: true
+                    }
+                  });
                 setSellerorder(data)
                 history.push('/user/dashboard')
             }

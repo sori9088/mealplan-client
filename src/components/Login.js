@@ -86,7 +86,6 @@ export default function Login(props) {
         localStorage.setItem('token', data.token)
         console.log(data)
         props.setUser(data.user)
-        props.setFbid(data.fb_id)
         history.push('/')
 
       } else {
