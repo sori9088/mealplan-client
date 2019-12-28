@@ -134,7 +134,7 @@ export default function Signup() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className="my-5">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
