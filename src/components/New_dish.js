@@ -83,7 +83,7 @@ export default function New_dish(props) {
                         <Form.Group as={Col} md="6" controlId="validationCustom03">
                             <Form.Label>Price ($)
                         </Form.Label>
-                            <Form.Control type="number" placeholder="Price" required name="price" />
+                            <Form.Control type="number" step="any" placeholder="Price" required name="price" />
                             <Form.Control.Feedback type="invalid">
                                 Please input a valid price.
             </Form.Control.Feedback>
@@ -98,7 +98,7 @@ export default function New_dish(props) {
                     </Form.Row>
                     <Form.Group>
                         <Form.Label>Description</Form.Label>
-                        <Form.Control as="textarea" rows="4" name="description" />
+                        <Form.Control as="textarea" rows="4" name="description" wrap="hard" />
                     </Form.Group>
                     <Button type="submit" variant="success">Submit</Button>
                 </Form>

@@ -85,7 +85,7 @@ export default function Dashboard(props) {
                                                                     <span class="description">Cart</span>
                                                                 </div>
                                                                 <div>
-                                                                    <span class="heading">1</span>
+                                                                    <span class="heading">{order && order.comments}</span>
                                                                     <span class="description">Comments</span>
                                                                 </div>
                                                             </div>

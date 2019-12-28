@@ -189,7 +189,8 @@ export default function Single_product(props) {
 
                                 <p className="lead font-weight-bold">{dish && dish.name}</p>
 
-                                <p>{dish && dish.description}</p>
+                                <p>{dish && dish.description.split('\n').map(line => <>{line}<br /></>
+                                )}</p>
                                 <div className="col-8">
                                     <div className="row">
                                         <Form className="d-flex justify-content-left" onChange={e => hansol(e)} onSubmit={(e) => {
@@ -283,7 +284,7 @@ export default function Single_product(props) {
                             <div class="widget-area no-padding blank">
                                 <div class="status-upload">
                                     <form onSubmit={(e) => addComment(e)} onChange={e => comment(e)}>
-                                        <textarea name="comment" placeholder="Add a comment..." ></textarea>
+                                        <textarea name="comment" placeholder="Add a comment..." wrap="hard"></textarea>
                                         <ul>
                                             <li className="pt-2">
                                                 <Box component="fieldset" mb={3} borderColor="transparent">
@@ -307,34 +308,35 @@ export default function Single_product(props) {
                         <div className="col-md-10">
                             <div className="card">
                                 {comments && comments.comments.length === 0 ? <>
-                                <h5 className="text-muted text-center my-4">Nothing to see...</h5>
-                                </> 
-                                : <>
-                                <div className="card-body">
-                                    {comments && comments.comments.map((comment) =>
-                                        <div className="row">
-                                            <div className="col-md-2">
-                                                <img src={comment.avatar_url} className="img rounded-circle img-fluid" />
-                                                <p className="text-secondary text-center">{moment(comment.created).fromNow()}</p>
-                                            </div>
-                                            <div className="col-md-10">
-                                                <div className="justify-content-between d-flex">
-                                                    <div>
-                                                        <a className="float-left mr-3" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{comment.user_name}</strong></a>
-                                                        <Rating name="read-only" value={comment.rating} readOnly />
+                                    <h5 className="text-muted text-center my-4">Nothing to see...</h5>
+                                </>
+                                    : <>
+                                        <div className="card-body">
+                                            {comments && comments.comments.map((comment) =>
+                                                <div className="row">
+                                                    <div className="col-md-2">
+                                                        <img src={comment.avatar_url} className="img rounded-circle img-fluid" />
+                                                        <p className="text-secondary text-center">{moment(comment.created).fromNow()}</p>
                                                     </div>
-                                                    <div>
-                                                        <a onClick={(e) => deleteComment(e, comment.id)}><i class="fas fa-trash-alt"></i></a>
+                                                    <div className="col-md-10">
+                                                        <div className="justify-content-between d-flex">
+                                                            <div>
+                                                                <a className="float-left mr-3" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{comment.user_name}</strong></a>
+                                                                <Rating name="read-only" value={comment.rating} readOnly />
+                                                            </div>
+                                                            <div>
+                                                                <a onClick={(e) => deleteComment(e, comment.id)}><i class="fas fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="clearfix"></div>
+                                                        <p>{comment.body.split('\n').map(line => <>{line}<br /></> 
+                                                            )}</p>
                                                     </div>
                                                 </div>
-                                                <div className="clearfix"></div>
-                                                <p>{comment.body}</p>
-                                            </div>
+                                            )}
                                         </div>
-                                    )}
-                                </div>
-                                </>}
-                                
+                                    </>}
+
                             </div>
                         </div>
                     </div>
