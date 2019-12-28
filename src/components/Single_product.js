@@ -67,6 +67,9 @@ export default function Single_product(props) {
         }
     }
 
+
+    console.log(sellerorder)
+
     async function getComment(id) {
         const response = await fetch(process.env.REACT_APP_BURL + "/product/comment/get/" + id, {
             headers: {
@@ -243,7 +246,7 @@ export default function Single_product(props) {
                                         <div className="col">
                                             <div className="card-profile-stats d-flex justify-content-center mt-md-1">
                                                 <div>
-                                                    <span className="heading">{sellerorder && sellerorder.orders.length}</span>
+                                                    <span className="heading">{sellerorder && sellerorder.order_count}</span>
                                                     <span className="description">Orders</span>
                                                 </div>
                                                 <div>

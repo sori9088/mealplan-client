@@ -71,7 +71,19 @@ export default function Dashboard_s(props) {
         if (response.ok) {
             const data = await response.json()
             if (data.success) {
-                alert('Successfully discontinued :)))')
+                store.addNotification({
+                    title: "Discontinued Out!",
+                    message: "Successfully discontinued :)))",
+                    type: "success",
+                    insert: "top",
+                    container: "bottom-center",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 4000,
+                      onScreen: true
+                    }
+                  });
                 setProducts(data)
             } else {
                 alert(data.message)
@@ -215,7 +227,7 @@ export default function Dashboard_s(props) {
                                     <div className="col">
                                         <div className="card-profile-stats d-flex justify-content-center mt-md-1">
                                             <div>
-                                                <span className="heading">{sellerorder && sellerorder.orders.length}</span>
+                                                <span className="heading">{sellerorder && sellerorder.order_count}</span>
                                                 <span className="description">Orders</span>
                                             </div>
                                             <div>

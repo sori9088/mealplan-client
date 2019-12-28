@@ -7,7 +7,7 @@ import { Form, Spinner, Container } from 'react-bootstrap'
 export default function Dashboard(props) {
 
     const [order, setOrder] = useState(null)
-    const [length, setLength] = useState("")
+    const [length, setLength] = useState("0")
 
     useEffect(() => {
         getOrder();
@@ -85,7 +85,8 @@ export default function Dashboard(props) {
                                                                     <span class="description">Cart</span>
                                                                 </div>
                                                                 <div>
-                                                                    <span class="heading">{order && order.comments}</span>
+                                                                    <span class="heading">{order ?
+                                                                        <>{order && order.comments}</> : <>0</>}</span>
                                                                     <span class="description">Comments</span>
                                                                 </div>
                                                             </div>
@@ -109,18 +110,18 @@ export default function Dashboard(props) {
                                                         <div className="card-type-icon with-border">{cart.cart_id}</div>
                                                     </div>
                                                     <div className="col-11 d-flex justify-content-start align-items-center">
-                                                            <div className="col-2">
-                                                                <span className="title"><strong>{cart.status}</strong></span>
-                                                            </div>
-                                                            <div className="col-4">
-                                                                <small className="caption">{moment(cart.ordered).format('lll')}</small>
-                                                            </div>
-                                                            <div className="col-5">
-                                                                <span className="title">{cart.product_name}</span>
-                                                            </div>
-                                                            <div className="col-1">
-                                                                <small className="title">X{cart.quantity}</small>
-                                                            </div>
+                                                        <div className="col-2">
+                                                            <span className="title"><strong>{cart.status}</strong></span>
+                                                        </div>
+                                                        <div className="col-4">
+                                                            <small className="caption">{moment(cart.ordered).format('lll')}</small>
+                                                        </div>
+                                                        <div className="col-5">
+                                                            <span className="title">{cart.product_name}</span>
+                                                        </div>
+                                                        <div className="col-1">
+                                                            <small className="title">X{cart.quantity}</small>
+                                                        </div>
                                                     </div>
 
                                                     <i className="material-icons end-icon"></i>

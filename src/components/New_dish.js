@@ -1,12 +1,26 @@
 import React, { useState } from 'react'
 import { Form, Button, Col, InputGroup, Container } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
+import { uploadFile } from 'react-s3';
+import { store } from 'react-notifications-component';
 
+
+
+
+const config = {
+    bucketName: 'mealplann',
+    dirName: 'product', /* optional */
+    region: 'ap-northeast-2',
+    accessKeyId: process.env.REACT_APP_CLIENT,
+    secretAccessKey: process.env.REACT_APP_KEY,
+}
 
 
 export default function New_dish(props) {
     const [validated, setValidated] = useState(false);
     const [input, setInput] = useState({})
+    const [file, setFile] = useState(null)
+    const [imageurl, setImageurl] = useState("")
     const history = useHistory()
 
 
@@ -16,6 +30,31 @@ export default function New_dish(props) {
             ...input,
             [e.target.name]: e.target.value
         })
+    }
+
+    const onchangeHandle = e => {
+        setFile(e.target.files[0])
+    }
+
+
+    const upload = () => {
+        uploadFile(file, config)
+            .then(data => {
+                store.addNotification({
+                    message: "Completely uploaded :)",
+                    type: "success",
+                    insert: "top",
+                    container: "bottom-center",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 3000,
+                        onScreen: true
+                    }
+                });
+                setImageurl(data.location)
+            })
+            .catch(err => console.error(err))
     }
 
 
@@ -35,14 +74,18 @@ export default function New_dish(props) {
                 'Content-Type': "application/json",
                 Authorization: `Token ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify(input)
+            body: JSON.stringify({
+                input,
+                "img_url": imageurl
+            })
         })
+
         if (res.ok) {
             const data = await res.json()
             if (data.success) {
                 // window.location(process.env.REACT_APP_FURL+"/login") // redirect using window
-                history.push('/shop')
                 props.setDishes(data.data)
+                history.push('/shop')
 
             } else {
                 alert(data.message)
@@ -88,13 +131,12 @@ export default function New_dish(props) {
                                 Please input a valid price.
             </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group as={Col} md="6" controlId="validationCustom04">
-                            <Form.Label>Image url</Form.Label>
-                            <Form.Control type="text" placeholder="Image URL" name="img_url" required />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a valid URL.
-            </Form.Control.Feedback>
-                        </Form.Group>
+                        <div className="form-group col-md-6">
+                            <Form.Label>Food Image  <small>{imageurl ? <><i class="fas fa-check-circle" style={{"color" : "green"}}></i> uploaded !</> :<><i class="fas fa-exclamation-circle" style={{"color" : "red"}} ></i> please upload !</>}</small>
+                        </Form.Label><br />
+                            <input type="file" name="file" onChange={(e) => onchangeHandle(e)} />
+                            <Button variant="success" onClick={() => upload()}>Upload</Button>
+                        </div>
                     </Form.Row>
                     <Form.Group>
                         <Form.Label>Description</Form.Label>

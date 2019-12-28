@@ -14,7 +14,17 @@ import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap'
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { green, red, pink, orange } from '@material-ui/core/colors';
+import { uploadFile } from 'react-s3';
+import { store } from 'react-notifications-component';
 
+
+const config = {
+    bucketName: 'mealplann',
+    dirName: 'user', /* optional */
+    region: 'ap-northeast-2',
+    accessKeyId: process.env.REACT_APP_CLIENT,
+    secretAccessKey: process.env.REACT_APP_KEY,
+}
 
 function Copyright() {
   return (
@@ -57,13 +67,43 @@ const theme = createMuiTheme({
 
 
 export default function Signup() {
-  const [input, setInput] = useState({ avatar_url: "", seller: "false" })
+  const [input, setInput] = useState({ seller: "false" })
+  const [file, setFile] = useState(null)
+  const [avatarurl, setAvatarUrl] = useState("")
+
   const history = useHistory()
   const hansol = e => {
     setInput({
       ...input,
       [e.target.name]: e.target.value
     })
+  }
+  
+  const onChangeHandler = (e) => {
+    setFile(e.target.files[0])
+  }
+
+  console.log(file)
+
+  const upload = () => {
+    uploadFile(file, config)
+    .then(data => {
+      store.addNotification({
+        message: "Completely uploaded :)",
+        type: "success",
+        insert: "top",
+        container: "bottom-center",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 3000,
+          onScreen: true
+        }
+      });
+      console.log(data)
+      setAvatarUrl(data.location)
+    })
+    .catch(err => console.error(err))
   }
 
   const register = async e => {
@@ -73,7 +113,9 @@ export default function Signup() {
       headers: {
         'Content-Type': "application/json"
       },
-      body: JSON.stringify(input)
+      body: JSON.stringify({
+        input,
+      "avatar_url" : avatarurl})
     })
     if (res.ok) {
       const data = await res.json()
@@ -88,7 +130,6 @@ export default function Signup() {
   }
 
 
-  console.log(input)
   const classes = useStyles();
 
   return (
@@ -102,6 +143,19 @@ export default function Signup() {
           <Typography component="h1" variant="h5">
             Sign up
         </Typography>
+        <div className={classes.form}>
+          <Grid item xs={12}>
+              <label>Profile Image</label><br />
+              <input type="file" name="file" onChange={(e) => onChangeHandler(e)} />
+              <Button
+              type="submit"
+              onClick={()=> upload()}              
+              color="primary"
+            >
+              Upload
+          </Button>
+          </Grid>
+          </div>
           <form className={classes.form} noValidate onChange={e => hansol(e)} onSubmit={(e) => register(e)}>
             <Grid container spacing={2}>
 
@@ -139,16 +193,7 @@ export default function Signup() {
                   autoComplete="current-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  id="avatar_url"
-                  label="Profile Image URL"
-                  name="avatar_url"
-                  autoComplete="avatar_url"
-                />
-              </Grid>
+              
               <Grid item xs={12}>
                 <Form.Group controlId="exampleForm.ControlSelect1">
                   <label>What you wanna be?</label>

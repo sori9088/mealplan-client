@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../images/logo.png';
 import { useHistory } from 'react-router-dom';
+import { store } from 'react-notifications-component';
 
 
 export default function Navi(props) {
@@ -37,9 +38,20 @@ export default function Navi(props) {
     if (res.ok) {
       // props.setUser(null)  // setState the user back to null (original state from app.js)
       // localStorage.clear('token')
-      alert("Successfully logged out :)))")
-      // history.push('/')
       window.location.replace("/")
+
+      store.addNotification({
+        message: "Successfully logged out :)))",
+        type: "success",
+        insert: "top",
+        container: "bottom-center",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 4000,
+          onScreen: true
+        }
+      });
 
     } else {
       alert("Something wrong!")

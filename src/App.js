@@ -21,7 +21,7 @@ import Complete from './components/Complete'
 import Setlocation from './components/Setlocation'
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import { useStripe } from './components/StripeHookProvider'
-import { useHistory } from 'react-router-dom';
+import { store } from 'react-notifications-component';
 import 'react-input-range/lib/css/index.css'
 
 function App() {
@@ -149,7 +149,19 @@ function App() {
     if (res.ok) {
       const data = await res.json()
       if (data.success) {
-        alert('Successfully add to cart :)))')
+        store.addNotification({
+          title: "Added to cart!",
+          message: "Successfully added to cart :)",
+          type: "success",
+          insert: "top",
+          container: "bottom-center",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 3000,
+            onScreen: true
+          }
+        });
         setCart(data.data);
       } else {
         alert(data.message)
